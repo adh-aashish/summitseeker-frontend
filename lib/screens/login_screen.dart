@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/screens/dashboard.dart';
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,8 +12,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    checkLogin();
+  }
+
+  void checkLogin() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("token");
+    if (val!=null && mounted) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => DashBoard()), 
+        (route)=>false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'User Name',
@@ -79,9 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
                     child: const Text('Login'),
-                    onPressed: () {
-                      print(nameController.text);
-                      print(passwordController.text);
+                    onPressed: ()async {
+                      await login();
                     },
                   )
               ),
@@ -105,7 +127,46 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-
     );
+  }
+
+  Future login() async {
+    if(passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
+      // print(emailController.text);
+      // print(passwordController.text);
+      const String url = 'https://reqres.in/api/login';
+      var response = await http.post(
+        Uri.parse(url),
+        body: ({
+          "email": emailController.text,
+          "password": passwordController.text,
+        })
+      );
+
+      if(response.statusCode == 200) {
+        final body = json.decode(response.body);
+        print(body['token']);
+
+        // store data in shared preferences
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString("token", body['token']);
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => DashBoard()), 
+            (route)=>false,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Token : ${body['token']}")));
+        }
+      } 
+      else {
+        final body = json.decode(response.body);
+        print(body['error']);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Credential")));
+      }
+    }
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Credentials can't be empty")));
+    }
   }
 }
