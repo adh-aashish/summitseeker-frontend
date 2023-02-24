@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/screens/dashboard.dart';
+import 'package:frontend/screens/home_screen.dart';
 import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (val!=null && mounted) {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => DashBoard()), 
+        MaterialPageRoute(builder: (context) => HomeScreen()), 
         (route)=>false,
       );
     }
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => DashBoard()), 
+            MaterialPageRoute(builder: (context) => HomeScreen()), 
             (route)=>false,
           );
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Token : ${body['token']}")));
