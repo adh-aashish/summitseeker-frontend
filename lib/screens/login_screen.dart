@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/screens/mother_screen.dart';
 import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
@@ -24,11 +24,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void checkLogin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("token");
-    if (val!=null && mounted) {
+    if (val != null && mounted) {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), 
-        (route)=>false,
+        MaterialPageRoute(builder: (context) => MotherScreen()),
+        (route) => false,
       );
     }
   }
@@ -39,91 +39,84 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-
-              const SizedBox(height:100),
-
-              const Center(
-                child: CircleAvatar(
-                  radius: 40.0,
-                  backgroundImage: AssetImage('assets/traveller_avatar.png'),
-                ),
-              ),
-
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30
-                  ),
-                )
-              ),
-
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 100),
+                const Center(
+                  child: CircleAvatar(
+                    radius: 40.0,
+                    backgroundImage: AssetImage('assets/traveller_avatar.png'),
                   ),
                 ),
-              ),
-
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextField(
-                  obscureText: true,
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                  ),
-                ),
-              ),
-
-              TextButton(
-                onPressed: () {
-                  //forgot password screen
-                },
-                child: const Text('Forgot Password?',),
-              ),
-
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: ElevatedButton(
-                    child: const Text('Login'),
-                    onPressed: ()async {
-                      await login();
-                    },
-                  )
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Don\'t have an account?'),
-                  TextButton(
+                Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(10),
                     child: const Text(
-                      'Sign in',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 30),
+                    )),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'User Name',
                     ),
-                    onPressed: () {
-                      //signup screen
-                    },
-                  )
-                ],
-              ),
-            ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                    obscureText: true,
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    //forgot password screen
+                  },
+                  child: const Text(
+                    'Forgot Password?',
+                  ),
+                ),
+                Container(
+                    height: 50,
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: ElevatedButton(
+                      child: const Text('Login'),
+                      onPressed: () async {
+                        await login();
+                      },
+                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text('Don\'t have an account?'),
+                    TextButton(
+                      child: const Text(
+                        'Sign in',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {
+                        //signup screen
+                      },
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -131,19 +124,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future login() async {
-    if(passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
+    if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
       // print(emailController.text);
       // print(passwordController.text);
       const String url = 'https://reqres.in/api/login';
-      var response = await http.post(
-        Uri.parse(url),
-        body: ({
-          "email": emailController.text,
-          "password": passwordController.text,
-        })
-      );
+      var response = await http.post(Uri.parse(url),
+          body: ({
+            "email": emailController.text,
+            "password": passwordController.text,
+          }));
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         final body = json.decode(response.body);
         print(body['token']);
 
@@ -153,20 +144,21 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()), 
-            (route)=>false,
+            MaterialPageRoute(builder: (context) => MotherScreen()),
+            (route) => false,
           );
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Token : ${body['token']}")));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Token : ${body['token']}")));
         }
-      } 
-      else {
+      } else {
         final body = json.decode(response.body);
         print(body['error']);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Credential")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Invalid Credential")));
       }
-    }
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Credentials can't be empty")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Credentials can't be empty")));
     }
   }
 }
