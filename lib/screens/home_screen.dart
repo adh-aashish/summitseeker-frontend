@@ -39,17 +39,23 @@ class _HomeScreenState extends State<HomeScreen>
             const SizedBox(height: 20.0),
             Row(
               children: const [
-                Text(
-                  "Summit Seekers",
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    "Summit Seekers",
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 40.0),
-            SearchBar(),
+            const Padding(
+              padding: EdgeInsetsDirectional.only(start: 20, end: 20),
+              child: SearchBar(),
+            ),
             const SizedBox(height: 35.0),
             Container(
               child: Align(
