@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/search_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,19 +37,28 @@ class _HomeScreenState extends State<HomeScreen>
         child: Column(
           children: <Widget>[
             //search_bar,
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 50.0),
             Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsetsDirectional.only(start: 20),
+              children: [
+                const Padding(
+                  padding: EdgeInsetsDirectional.only(start: 30),
                   child: Text(
                     "Summit Seekers",
                     style: TextStyle(
+                      color: Color.fromARGB(255, 239, 239, 239),
                       fontSize: 25.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: const CircleAvatar(
+                    radius: 15.0,
+                    backgroundImage: AssetImage('assets/traveller_avatar.png'),
+                  ),
+                )
               ],
             ),
             const SizedBox(height: 40.0),
@@ -63,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen>
                 child: TabBar(
                   labelPadding: const EdgeInsets.only(left: 20, right: 20),
                   controller: _tabController,
-                  labelColor: Colors.black,
+                  labelColor: Colors.white,
                   unselectedLabelColor: Colors.grey,
                   isScrollable: true,
                   indicatorSize: TabBarIndicatorSize.label,
@@ -72,14 +82,14 @@ class _HomeScreenState extends State<HomeScreen>
                   tabs: [
                     Tab(text: "Trending"),
                     Tab(text: "Recommended"),
-                    Tab(text: "Friends"),
+                    Tab(text: "New"),
                   ],
                 ),
               ),
             ),
             Container(
               height: 300,
-              color: Colors.white,
+              color: Colors.white.withOpacity(0),
               width: double.infinity,
               child: TabBarView(
                 controller: _tabController,
@@ -94,12 +104,22 @@ class _HomeScreenState extends State<HomeScreen>
                           //     .detailPage(info[index]);
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(right: 15, top: 10),
+                          margin: const EdgeInsets.only(
+                              right: 15, top: 15, bottom: 15),
                           width: 200,
                           height: 300,
                           decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset:
+                                    Offset(2, 2), // changes position of shadow
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
+                            color: Colors.white.withOpacity(0),
                             image: const DecorationImage(
                                 image: AssetImage(
                                   "img/mountain.jpeg",
@@ -126,6 +146,15 @@ class _HomeScreenState extends State<HomeScreen>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset:
+                                    Offset(2, 2), // changes position of shadow
+                              ),
+                            ],
                             image: const DecorationImage(
                                 image: AssetImage(
                                   "img/mountain.jpeg",
@@ -152,6 +181,15 @@ class _HomeScreenState extends State<HomeScreen>
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset:
+                                    Offset(2, 2), // changes position of shadow
+                              ),
+                            ],
                             image: const DecorationImage(
                                 image: AssetImage(
                                   "img/mountain.jpeg",
@@ -165,21 +203,22 @@ class _HomeScreenState extends State<HomeScreen>
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 20, right: 20),
-              child: Text(
-                "Explore more",
+              child: const Text(
+                "Explore more...",
                 style: TextStyle(
                   fontSize: 20.0,
+                  color: Color.fromARGB(255, 229, 229, 229),
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 30,
             ),
             Container(
               height: 120,
@@ -200,8 +239,10 @@ class _HomeScreenState extends State<HomeScreen>
                             height: 60,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Color.fromARGB(255, 204, 204, 204),
+                                color: Color.fromARGB(255, 204, 204, 204)
+                                    .withOpacity(0.2),
                                 image: DecorationImage(
+                                    opacity: 0.7,
                                     image: AssetImage(
                                         "img/" + images.keys.elementAt(index)),
                                     fit: BoxFit.cover)),
@@ -213,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen>
                             child: Text(
                               images.values.elementAt(index),
                               style: TextStyle(
-                                color: Color.fromARGB(255, 121, 121, 121),
+                                color: Color.fromARGB(255, 159, 159, 159),
                               ),
                             ),
                           )
