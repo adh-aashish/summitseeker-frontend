@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'home_screen.dart';
@@ -12,7 +13,7 @@ class MotherScreen extends StatefulWidget {
 
 class _MotherScreenState extends State<MotherScreen> {
   int _selectedIndex = 0;
-  static const List<Widget> _pages = <Widget>[
+  static List<Widget> _pages = <Widget>[
     HomeScreen(),
     Icon(
       Icons.explore,
@@ -55,12 +56,19 @@ class _MotherScreenState extends State<MotherScreen> {
               )),
         ],
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          )),
+      body: Container(
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [Colors.blue, Colors.green],
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //   ),
+        // ),
+        child: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
           unselectedFontSize: 0,
           selectedFontSize: 0,
