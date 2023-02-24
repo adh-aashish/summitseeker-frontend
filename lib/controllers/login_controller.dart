@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 Future<String> login(String email, String password) async {
   try {
@@ -29,3 +30,24 @@ Future<String> login(String email, String password) async {
   }
 }
 
+Future<bool> isTokenExpired() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? token = pref.getString("token");
+  if (token != null) {
+    // Map<String, dynamic> payload = Jwt.parseJwt(token);
+    // DateTime? expiryDate = Jwt.getExpiryDate(token);
+    bool isExpired = Jwt.isExpired(token);
+    return isExpired;
+  } else {
+    return true;
+  }
+}
+
+Future<bool> isTokenEmpty() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? token = pref.getString("token");
+  if (token != null) {
+    return false;
+  }
+  return true;
+}
