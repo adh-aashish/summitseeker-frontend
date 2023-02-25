@@ -180,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'First Name',
                     ),
                     validator: (value) {
@@ -194,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Last Name',
                     ),
                     validator: (value) {
@@ -209,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(labelText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
