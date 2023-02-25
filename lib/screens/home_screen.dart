@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/search_bar.dart';
+import 'mother_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final List trendingList;
@@ -52,9 +53,11 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    scaffoldKey.currentState?.openDrawer();
+                  },
                   icon: const CircleAvatar(
-                    radius: 15.0,
+                    radius: 25.0,
                     backgroundImage: AssetImage('assets/traveller_avatar.png'),
                   ),
                 )

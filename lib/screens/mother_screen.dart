@@ -1,6 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/drawer.dart';
+// import 'package:frontend/screens/test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/screens/login_screen.dart';
 import 'home_screen.dart';
+
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class MotherScreen extends StatefulWidget {
   const MotherScreen({super.key});
@@ -39,41 +45,42 @@ class _MotherScreenState extends State<MotherScreen> {
         ),
       ),
       child: Scaffold(
-        key: _scaffoldKey,
+        key: scaffoldKey,
         backgroundColor: Colors.white.withOpacity(0),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Drawer Header',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {
-                  // code to handle onTap
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text('About'),
-                onTap: () {
-                  // code to handle onTap
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: MyDrawer(),
+        // drawer: Drawer(
+        //   child: ListView(
+        //     padding: EdgeInsets.zero,
+        //     children: <Widget>[
+        //       DrawerHeader(
+        //         decoration: BoxDecoration(
+        //           color: Colors.blue,
+        //         ),
+        //         child: Text(
+        //           'Drawer Header',
+        //           style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 24,
+        //           ),
+        //         ),
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.settings),
+        //         title: Text('Settings'),
+        //         onTap: () {
+        //           // code to handle onTap
+        //         },
+        //       ),
+        //       ListTile(
+        //         leading: Icon(Icons.info),
+        //         title: Text('About'),
+        //         onTap: () {
+        //           // code to handle onTap
+        //         },
+        //       ),
+        //     ],
+        //   ),
+        // ),
         // appBar: AppBar(
         //   toolbarHeight: 0,
         //   backgroundColor: Colors.white.withOpacity(0),
