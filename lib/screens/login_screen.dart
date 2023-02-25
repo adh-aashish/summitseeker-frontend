@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/mother_screen.dart';
+import 'package:frontend/screens/loading_screen.dart';
 import 'package:frontend/controllers/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const MotherScreen()),
+          MaterialPageRoute(builder: (context) => const LoadingScreen()),
           (route) => false,
         );
       }
@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MotherScreen()),
+                                builder: (context) => const LoadingScreen()),
                             (route) => false,
                           );
                         } else {
