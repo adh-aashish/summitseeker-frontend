@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/loading_screen.dart';
 import 'package:frontend/screens/mother_screen.dart';
 import 'package:frontend/screens/login_screen.dart';
+import 'package:frontend/screens/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(
@@ -14,6 +15,7 @@ void main() => runApp(
           '/': (context) => const MotherScreen(),
           '/login': (context) => const LoginScreen(),
           '/loading': (context) => const LoadingScreen(),
+          '/register': (context) => const RegisterScreen(),
         },
       ),
     );
