@@ -18,6 +18,16 @@ class _HomeScreenState extends State<HomeScreen>
     "survey.png": "Take Survey",
     "contact.png": "Contact Us"
   };
+  var gradient1 = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Colors.transparent,
+      Colors.black.withOpacity(0.5),
+      Colors.transparent,
+    ],
+    stops: const [0.2, 0.5, 0.8],
+  );
   @override
   void initState() {
     super.initState();
@@ -239,11 +249,21 @@ class _HomeScreenState extends State<HomeScreen>
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 0, 0, 0)
+                                        .withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                                 borderRadius: BorderRadius.circular(20),
                                 color: const Color.fromARGB(255, 204, 204, 204)
                                     .withOpacity(0.2),
                                 image: DecorationImage(
-                                    opacity: 0.7,
+                                    opacity: 0.6,
                                     image: AssetImage(
                                         "img/${images.keys.elementAt(index)}"),
                                     fit: BoxFit.cover)),

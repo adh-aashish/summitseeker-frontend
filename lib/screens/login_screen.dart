@@ -126,8 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Sign in',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         //signup screen
+                        await Navigator.pushNamed(context, '/register');
                       },
                     )
                   ],
