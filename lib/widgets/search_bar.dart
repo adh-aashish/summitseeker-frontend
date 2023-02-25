@@ -16,21 +16,27 @@ class _SearchBarState extends State<SearchBar> {
       child: TextField(
         decoration: InputDecoration(
           prefixIcon: IconButton(
+            color: Colors.white.withOpacity(0.6),
             icon: Icon(Icons.search),
             onPressed: () {
               // Perform search functionality here
             },
           ),
           suffixIcon: IconButton(
+            color: Colors.white.withOpacity(0.6),
             icon: Icon(Icons.tune),
             onPressed: () {
               // Perform search functionality here
             },
           ),
-          border: OutlineInputBorder(
+          hintText: 'Enter a search term',
+          hintStyle: TextStyle(
+            color: Colors.white.withOpacity(0.6),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
             borderRadius: BorderRadius.circular(30.0),
           ),
-          hintText: 'Enter a search term',
         ),
       ),
     );

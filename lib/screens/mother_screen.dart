@@ -31,64 +31,110 @@ class _MotherScreenState extends State<MotherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.sort,
-            color: Colors.grey.withOpacity(0.75),
-            size: 30.0,
-          ),
-          onPressed: () {},
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 26, 0, 54),
+            Color.fromARGB(255, 0, 132, 172)
+          ],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
         ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-              child: IconButton(
-                onPressed: () {},
-                icon: const CircleAvatar(
-                  radius: 15.0,
-                  backgroundImage: AssetImage('assets/traveller_avatar.png'),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.white.withOpacity(0),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
                 ),
-              )),
-        ],
-      ),
-      body: Container(
-        // decoration: const BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [Colors.blue, Colors.green],
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //   ),
-        // ),
-        child: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
+                child: Text(
+                  'Drawer Header',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  // code to handle onTap
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('About'),
+                onTap: () {
+                  // code to handle onTap
+                },
+              ),
+            ],
+          ),
         ),
+        // appBar: AppBar(
+        //   toolbarHeight: 0,
+        //   backgroundColor: Colors.white.withOpacity(0),
+        //   elevation: 0.0,
+        //   leading: IconButton(
+        //     icon: const Icon(
+        //       Icons.sort,
+        //       color: Colors.grey,
+        //       size: 30.0,
+        //     ),
+        //     onPressed: () {},
+        //   ),
+        //   actions: [
+        //     Padding(
+        //         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+        //         child: IconButton(
+        //           onPressed: () {},
+        //           icon: const CircleAvatar(
+        //             radius: 15.0,
+        //             backgroundImage: AssetImage('assets/traveller_avatar.png'),
+        //           ),
+        //         )),
+        //   ],
+        // ),
+        body: Container(
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     colors: [Colors.blue, Colors.green],
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight,
+          //   ),
+          // ),
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: _pages,
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            unselectedFontSize: 0,
+            selectedFontSize: 0,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.black.withOpacity(0.25),
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white.withOpacity(0.5),
+            showUnselectedLabels: false,
+            showSelectedLabels: false,
+            elevation: 0,
+            items: const [
+              BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
+              BottomNavigationBarItem(
+                  label: "Explore", icon: Icon(Icons.explore)),
+              BottomNavigationBarItem(label: "Hire", icon: Icon(Icons.hiking)),
+              BottomNavigationBarItem(
+                  label: "Me", icon: Icon(Icons.notifications)),
+            ]),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          unselectedFontSize: 0,
-          selectedFontSize: 0,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          selectedItemColor: Colors.black54,
-          unselectedItemColor: Colors.grey.withOpacity(0.5),
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          elevation: 0,
-          items: const [
-            BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
-            BottomNavigationBarItem(
-                label: "Explore", icon: Icon(Icons.explore)),
-            BottomNavigationBarItem(label: "Hire", icon: Icon(Icons.hiking)),
-            BottomNavigationBarItem(
-                label: "Me", icon: Icon(Icons.notifications)),
-          ]),
     );
   }
 
