@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/search_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List trendingList;
+  const HomeScreen({required this.trendingList, super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -119,10 +119,9 @@ class _HomeScreenState extends State<HomeScreen>
                             ],
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white.withOpacity(0),
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                  "img/welcome-one.png",
-                                ),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    widget.trendingList[index]['image-url']),
                                 fit: BoxFit.cover),
                           ),
                         ),
@@ -185,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen>
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset:
-                                    Offset(2, 2), // changes position of shadow
+                                offset: const Offset(
+                                    2, 2), // changes position of shadow
                               ),
                             ],
                             image: const DecorationImage(
@@ -238,21 +237,21 @@ class _HomeScreenState extends State<HomeScreen>
                             height: 60,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Color.fromARGB(255, 204, 204, 204)
+                                color: const Color.fromARGB(255, 204, 204, 204)
                                     .withOpacity(0.2),
                                 image: DecorationImage(
                                     opacity: 0.7,
                                     image: AssetImage(
-                                        "img/" + images.keys.elementAt(index)),
+                                        "img/${images.keys.elementAt(index)}"),
                                     fit: BoxFit.cover)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Container(
                             child: Text(
                               images.values.elementAt(index),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 159, 159, 159),
                               ),
                             ),
