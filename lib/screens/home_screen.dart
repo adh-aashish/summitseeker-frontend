@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -79,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
                   indicatorSize: TabBarIndicatorSize.label,
                   //indicator:
                   // CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                  tabs: [
+                  tabs: const [
                     Tab(text: "Trending"),
                     Tab(text: "Recommended"),
                     Tab(text: "New"),
@@ -111,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen>
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset:
@@ -122,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
                             color: Colors.white.withOpacity(0),
                             image: const DecorationImage(
                                 image: AssetImage(
-                                  "img/mountain.jpeg",
+                                  "img/welcome-one.png",
                                 ),
                                 fit: BoxFit.cover),
                           ),
@@ -148,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen>
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset:
@@ -183,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen>
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
                                 offset:

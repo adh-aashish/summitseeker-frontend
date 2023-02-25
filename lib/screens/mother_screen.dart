@@ -13,21 +13,8 @@ class MotherScreen extends StatefulWidget {
 
 class _MotherScreenState extends State<MotherScreen> {
   int _selectedIndex = 0;
-  static List<Widget> _pages = <Widget>[
-    HomeScreen(),
-    Icon(
-      Icons.explore,
-      size: 150,
-    ),
-    Icon(
-      Icons.hiking,
-      size: 150,
-    ),
-    Icon(
-      Icons.notifications,
-      size: 150,
-    ),
-  ];
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +22,15 @@ class _MotherScreenState extends State<MotherScreen> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 26, 0, 54),
-            Color.fromARGB(255, 0, 132, 172)
+            Color.fromARGB(255, 0, 18, 31),
+            Color.fromARGB(129, 0, 138, 180)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
         ),
       ),
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white.withOpacity(0),
         drawer: Drawer(
           child: ListView(
@@ -137,6 +125,22 @@ class _MotherScreenState extends State<MotherScreen> {
       ),
     );
   }
+
+  static late List<Widget> _pages = <Widget>[
+    HomeScreen(),
+    Icon(
+      Icons.explore,
+      size: 150,
+    ),
+    Icon(
+      Icons.hiking,
+      size: 150,
+    ),
+    Icon(
+      Icons.notifications,
+      size: 150,
+    ),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
