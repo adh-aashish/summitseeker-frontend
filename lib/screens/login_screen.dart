@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/loading_screen.dart';
-import 'package:frontend/controllers/login_controller.dart';
+import 'package:frontend/services/login.dart';
+import 'package:frontend/utils/token.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

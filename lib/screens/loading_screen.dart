@@ -14,6 +14,7 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   void setupAllImages() async {
     List trendingList = [];
+    Map userProfile = {};
     String token = await getToken();
     if (token == 'Expired' && mounted) {
       Navigator.pushAndRemoveUntil(
@@ -22,28 +23,101 @@ class _LoadingScreenState extends State<LoadingScreen> {
         (route) => false,
       );
     }
-    var response = await http.get(
-      Uri.parse('http://74.225.249.44/api/trails/'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
 
-    if (response.statusCode == 200) {
-      final decodedBody = await jsonDecode(response.body);
-      List data = decodedBody["data"];
-      for (Map<String, dynamic> trail in data) {
-        Map newMap = {};
-        newMap["name"] = trail["name"];
-        newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
-        trendingList.add(newMap);
+    // get trending list
+    try {
+      var response = await http.get(
+        Uri.parse('http://74.225.249.44/api/trails/'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      final body = await jsonDecode(response.body);
+      if (body["token_invalid"]) {
+        print("Invalid token");
+        // need to implement logout from here
       }
-    } else {
-      print("Error fetching images");
+      if (body["success"]) {
+        List data = body["data"];
+        for (Map<String, dynamic> trail in data) {
+          Map newMap = {};
+          newMap["name"] = trail["name"];
+          newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
+          trendingList.add(newMap);
+        }
+      } else {
+        if (body["validation_error"]) {
+          print(body["errors"]);
+        } else {
+          print(body["message"]);
+        }
+      }
+    } catch (e) {
+      print("Error while getting trending list");
     }
+    // if (response.statusCode == 200) {
+    //   final decodedBody = await jsonDecode(response.body);
+    //   List data = decodedBody["data"];
+    //   for (Map<String, dynamic> trail in data) {
+    //     Map newMap = {};
+    //     newMap["name"] = trail["name"];
+    //     newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
+    //     trendingList.add(newMap);
+    //   }
+    // } else {
+    //   print("Error fetching images");
+    // }
+
+    try {
+      var response = await http.get(
+        Uri.parse('http://74.225.249.44/api/user/profile/'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      final body = await jsonDecode(response.body);
+      if (body["token_invalid"]) {
+        print("Invalid token");
+        // need to implement logout from here
+      }
+      if (body["success"]) {
+        final data = body["data"];
+        userProfile["first_name"] = data["first_name"];
+        userProfile["last_name"] = data["last_name"];
+        userProfile["email"] = data["email"];
+        userProfile["user_type"] = data["user_type"];
+      } else {
+        if (body["validation_error"]) {
+          print(body["errors"]);
+        } else {
+          print(body["message"]);
+        }
+      }
+    } catch (e) {
+      print("Error while getting trending list");
+    }
+
+    // response = await http.get(
+    //   Uri.parse('http://74.225.249.44/api/user/profile/'),
+    //   headers: {'Authorization': 'Bearer $token'},
+    // );
+    // final body = await jsonDecode(response.body);
+    // if (body["token_invalid"]) {
+    //   logout(context);
+    // }
+    // if (body["success"]) {
+    //   final data = body["data"];
+    //   userProfile["first_name"] = data["first_name"];
+    //   userProfile["last_name"] = data["last_name"];
+    //   userProfile["email"] = data["email"];
+    //   userProfile["user_type"] = data["user_type"];
+    // } else {
+    //   if (body["validation_error"]) {
+    //     print("Validation error");
+    //   }
+    // }
 
     if (mounted) {
       // print("Here");
       Navigator.pushReplacementNamed(context, '/', arguments: {
         'trendingList': trendingList,
+        'userProfile': userProfile,
       });
     }
   }

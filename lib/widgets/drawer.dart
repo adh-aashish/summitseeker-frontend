@@ -1,16 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/services/logout.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
+  final Map userProfile;
+  const MyDrawer({required this.userProfile, super.key});
+
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
-    final imageURL =
+    String imageURL =
         "https://yt3.googleusercontent.com/9A5rzNCvhYMJq9cJGvn2dIUCkqREZNhmhTPQeHy7tORKWixbkLe79HIlsy2TklYYO-lvADtUbg=s176-c-k-c0x00ffffff-no-rj";
 
     return Drawer(
       child: Container(
         padding: EdgeInsets.zero,
-        color: Color.fromARGB(255, 0, 53, 81),
+        color: const Color.fromARGB(255, 0, 53, 81),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -21,8 +30,9 @@ class MyDrawer extends StatelessWidget {
                     color: Colors.black.withOpacity(0.2),
                   ),
                   margin: EdgeInsets.zero,
-                  accountName: Text("Hrishav Khadka"),
-                  accountEmail: Text("notrisavKhadka@gmail.com"),
+                  accountName: Text(
+                      "${widget.userProfile['first_name']} ${widget.userProfile['last_name']}"),
+                  accountEmail: Text(widget.userProfile["email"]),
                   currentAccountPicture: CircleAvatar(
                     backgroundImage: NetworkImage(imageURL),
                   )),
@@ -49,16 +59,19 @@ class MyDrawer extends StatelessWidget {
                 textScaleFactor: 1.2,
               ),
             ),
-            const ListTile(
+            ListTile(
               iconColor: Colors.white,
               textColor: Colors.white,
-              leading: Icon(
+              leading: const Icon(
                 CupertinoIcons.return_icon,
               ),
-              title: Text(
+              title: const Text(
                 "Log Out",
                 textScaleFactor: 1.2,
               ),
+              onTap: () {
+                logout(context);
+              },
             ),
           ],
         ),

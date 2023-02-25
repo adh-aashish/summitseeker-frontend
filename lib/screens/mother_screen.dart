@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/drawer.dart';
-// import 'package:frontend/screens/test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/screens/login_screen.dart';
 import 'home_screen.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -18,6 +15,7 @@ class MotherScreen extends StatefulWidget {
 class _MotherScreenState extends State<MotherScreen> {
   int _selectedIndex = 0;
   List trendingList = [];
+  Map userProfile = {};
   Map data = {};
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,6 +29,9 @@ class _MotherScreenState extends State<MotherScreen> {
     trendingList = trendingList.isNotEmpty
         ? trendingList
         : ((data['trendingList'] ?? []) as List);
+    userProfile = userProfile.isNotEmpty
+        ? userProfile
+        : ((data['userProfile'] ?? {}) as Map);
     // print("in mother screen\n");
     // print(parameters);
     return Container(
@@ -47,7 +48,9 @@ class _MotherScreenState extends State<MotherScreen> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white.withOpacity(0),
-        drawer: MyDrawer(),
+        drawer: MyDrawer(
+          userProfile: userProfile,
+        ),
         // drawer: Drawer(
         //   child: ListView(
         //     padding: EdgeInsets.zero,
