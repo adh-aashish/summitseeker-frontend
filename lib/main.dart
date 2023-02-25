@@ -8,9 +8,10 @@ void main() => runApp(
         theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(),
         ),
-        initialRoute: '/',
+        initialRoute: '/login',
         routes: {
           '/': (context) => const MotherScreen(),
+          '/login': (context) => const LoginScreen(),
         },
       ),
     );
