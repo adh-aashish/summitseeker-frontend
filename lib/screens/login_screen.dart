@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/mother_screen.dart';
 import 'package:frontend/controllers/login_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,18 +10,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController =
+      TextEditingController(text: "robin@gmail.com");
+  TextEditingController passwordController =
+      TextEditingController(text: "nepalGreat123");
 
   void checkLogin() async {
-    // bool isEmpty = await isTokenEmpty();
-    // if (isEmpty) {
-    //   print("Empty");
-    //   return;
-    // }
     bool isExpired = await isTokenExpired();
     if (mounted) {
       if (isExpired) {
+        clearSharedPreferences();
         return;
       } else {
         Navigator.pushAndRemoveUntil(
@@ -114,9 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             (route) => false,
                           );
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("Invalid Credential")));
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(message)));
                         }
                       },
                     )),

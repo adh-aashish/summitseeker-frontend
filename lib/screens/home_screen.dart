@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen>
                   indicatorSize: TabBarIndicatorSize.label,
                   //indicator:
                   // CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                  tabs: [
+                  tabs: const [
                     Tab(text: "Trending"),
                     Tab(text: "Recommended"),
                     Tab(text: "Friends"),

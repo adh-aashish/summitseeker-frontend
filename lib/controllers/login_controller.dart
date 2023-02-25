@@ -26,7 +26,7 @@ Future<String> login(String email, String password) async {
       return body["message"];
     }
   } catch (e) {
-    throw Exception("Probem in Handling login");
+    return "ConnectionError";
   }
 }
 
@@ -50,4 +50,9 @@ Future<bool> isTokenEmpty() async {
     return false;
   }
   return true;
+}
+
+void clearSharedPreferences() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  preferences.clear();
 }
