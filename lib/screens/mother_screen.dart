@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/drawer.dart';
+import 'hire_screen.dart';
 import 'home_screen.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -151,10 +152,7 @@ class _MotherScreenState extends State<MotherScreen> {
       Icons.explore,
       size: 150,
     ),
-    const Icon(
-      Icons.hiking,
-      size: 150,
-    ),
+    TrekkingRoutesPage(),
     const Icon(
       Icons.notifications,
       size: 150,
