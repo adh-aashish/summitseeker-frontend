@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/services/logout.dart';
 
+import '../screens/edit_profile.dart';
+import '../screens/profile_info.dart';
+
 class MyDrawer extends StatefulWidget {
   final Map userProfile;
   const MyDrawer({required this.userProfile, super.key});
@@ -48,16 +51,25 @@ class _MyDrawerState extends State<MyDrawer> {
                 textScaleFactor: 1.2,
               ),
             ),
-            const ListTile(
+            ListTile(
               iconColor: Colors.white,
               textColor: Colors.white,
-              leading: Icon(
+              leading: const Icon(
                 CupertinoIcons.profile_circled,
               ),
-              title: Text(
+              title: const Text(
                 "Profile",
                 textScaleFactor: 1.2,
               ),
+              onTap: () {
+                //TODO: get guides for that route by its index no. from the server
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                  ),
+                );
+              },
             ),
             ListTile(
               iconColor: Colors.white,
