@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/trail_guides.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class TrekGuidesPage extends StatelessWidget {
   final int routeIndex;
@@ -81,11 +82,30 @@ class TrekGuidesPage extends StatelessWidget {
                       //   ),
                       // );
                       // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      // return Center(
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: const [
+                      //       CircularProgressIndicator(),
+                      //       Text("Loading..."),
+                      //     ],
+                      //   ),
+                      // );
+
                       return Center(
-                        child: Row(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            CircularProgressIndicator(),
-                            Text("Loading..."),
+                            SpinKitFadingFour(
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Loading...',
+                              style: TextStyle(color: Colors.white),
+                            )
                           ],
                         ),
                       );
