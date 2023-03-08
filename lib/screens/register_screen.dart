@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utils/register.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,16 +16,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _selectedGender;
   String? _selectedUserType = 'TR';
   String? _selectedExperience;
-  String? _dateOfBirth;
+  // String? _dateOfBirth;
   String? _contactNumber;
   String? _languagesSpoken;
   String? _firstName;
   String? _lastName;
   bool? _availability = true;
-  int _totalTrekCount = 0;
+  // int _totalTrekCount = 0;
   String _nationality = 'US'; // default value for nationality dropdown
-  List<String> _languages = []; // selected languages will be stored here
-  TextEditingController _dobController = TextEditingController();
+  final List<String> _languages = []; // selected languages will be stored here
+  final TextEditingController _dobController = TextEditingController();
 
   // List of countries for nationality dropdown
   final List<Map<String, String>> _countries = [
@@ -125,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  final List<String> _genders = ['M', 'F'];
+  final List<String> _genders = ['M', 'F', 'O'];
   final List<String> _userTypes = ['TR', 'GD'];
   final List<String> _experiences = ['N', 'B', 'S', 'P'];
 
@@ -226,7 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(labelText: 'Password'),
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -243,7 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Date of Birth',
                     ),
                     controller: _dobController,
@@ -356,7 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   DropdownButtonFormField<String>(
                     value: _selectedGender,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Gender',
                       border: OutlineInputBorder(),
                     ),
@@ -375,7 +376,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 16.0),
                   DropdownButtonFormField<String>(
                     value: _selectedUserType,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'User Type',
                       border: OutlineInputBorder(),
                     ),
@@ -396,7 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   (_selectedUserType == 'TR')
                       ? DropdownButtonFormField<String>(
                           value: _selectedExperience,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Experience',
                             border: OutlineInputBorder(),
                           ),
@@ -420,30 +421,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         )
                       : Column(
                           children: [
-                            TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                labelText: 'Total Trek Count',
-                                border: OutlineInputBorder(),
-                              ),
-                              initialValue: '$_totalTrekCount',
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter a number';
-                                }
-                                final intNumber = int.tryParse(value);
-                                if (intNumber == null) {
-                                  return 'Please enter a valid number';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _totalTrekCount = int.parse(value!);
-                              },
-                            ),
+                            // Total terk count is disabled for now
+                            // TextFormField(
+                            //   keyboardType: TextInputType.number,
+                            //   decoration: const InputDecoration(
+                            //     labelText: 'Total Trek Count',
+                            //     border: OutlineInputBorder(),
+                            //   ),
+                            //   initialValue: '$_totalTrekCount',
+                            //   validator: (value) {
+                            //     if (value == null || value.isEmpty) {
+                            //       return 'Please enter a number';
+                            //     }
+                            //     final intNumber = int.tryParse(value);
+                            //     if (intNumber == null) {
+                            //       return 'Please enter a valid number';
+                            //     }
+                            //     return null;
+                            //   },
+                            //   onSaved: (value) {
+                            //     _totalTrekCount = int.parse(value!);
+                            //   },
+                            // ),
                             const SizedBox(height: 20),
                             DropdownButtonFormField<bool>(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Availability',
                                 border: OutlineInputBorder(),
                               ),
@@ -453,7 +455,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   _availability = value;
                                 });
                               },
-                              items: [
+                              items: const [
                                 DropdownMenuItem(
                                   value: true,
                                   child: Text('Available'),
@@ -481,12 +483,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         _formKey.currentState?.save();
-                        print('Name: $_name');
-                        print('Email: $_email');
-                        print('Password: $_password');
+                        Registration reg = Registration(
+                            email: _email,
+                            password: _password,
+                            gender: _selectedGender,
+                            userType: _selectedUserType,
+                            experience: _selectedExperience,
+                            dateOfBirth: _dobController.text,
+                            contactNumber: _contactNumber,
+                            languagesSpoken: _languagesSpoken,
+                            firstName: _firstName,
+                            lastName: _lastName,
+                            availability: _availability,
+                            nationality: _nationality,
+                            languages: _languages);
+                        try {
+                          reg.createUser();
+                        } catch (e) {
+                          print("Handle error at registration");
+                        }
+                        // print('Name: $_name');
+                        // print('Email: $_email');
+                        // print('Password: $_password');
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
                 ],
               ),

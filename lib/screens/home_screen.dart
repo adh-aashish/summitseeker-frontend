@@ -3,8 +3,8 @@ import 'package:frontend/widgets/search_bar.dart';
 import 'mother_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final List trendingList;
-  const HomeScreen({required this.trendingList, super.key});
+  final List allTrailList;
+  const HomeScreen({required this.allTrailList, super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen>
                 controller: _tabController,
                 children: [
                   ListView.builder(
-                    itemCount: 4,
+                    itemCount: widget.allTrailList.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen>
                             color: Colors.white.withOpacity(0),
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    widget.trendingList[index]['image-url']),
+                                    widget.allTrailList[index]['image-url']),
                                 fit: BoxFit.cover),
                           ),
                         ),

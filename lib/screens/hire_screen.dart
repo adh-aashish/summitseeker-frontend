@@ -3,26 +3,29 @@ import 'package:flutter/material.dart';
 import 'available_guides.dart';
 
 class TrekkingRoutesPage extends StatefulWidget {
+  final List allTrailList;
+  final List allRouteGuides = [];
+  TrekkingRoutesPage({required this.allTrailList, super.key});
+
   @override
-  _TrekkingRoutesPageState createState() => _TrekkingRoutesPageState();
+  State<TrekkingRoutesPage> createState() => _TrekkingRoutesPageState();
 }
 
 class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
-  final List<TrekkingRoute> _routes = [
-    TrekkingRoute(index: 0, name: 'Route 1', image: 'img/mountain.jpeg'),
-    TrekkingRoute(index: 0, name: 'Route 2', image: 'img/mountain2.png'),
-    TrekkingRoute(index: 0, name: 'Route 3', image: 'img/welcome-one.png'),
-    TrekkingRoute(index: 0, name: 'Route 4', image: 'img/welcome-two.png'),
-    TrekkingRoute(index: 0, name: 'Route 5', image: 'img/mountain.jpeg'),
-  ];
-
+  final List<TrekkingRoute> _routes = [];
   List<TrekkingRoute> _filteredRoutes = [];
 
   final TextEditingController _searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
+    for (var i = 0; i < widget.allTrailList.length; i++) {
+      TrekkingRoute newRoute = TrekkingRoute(
+          index: widget.allTrailList[i]["id"],
+          name: widget.allTrailList[i]["name"],
+          image: widget.allTrailList[i]["image-url"]);
+      _routes.add(newRoute);
+    }
     _filteredRoutes = _routes;
     _searchController.addListener(_onSearchChanged);
   }
@@ -78,12 +81,11 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                   TrekkingRoute route = _filteredRoutes[index];
                   return GestureDetector(
                     onTap: () {
-                      //TODO: get guides for that route by its index no. from the server
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => TrekGuidesPage(
-                            routeIndex: index,
+                            routeIndex: route.index,
                           ),
                         ),
                       );
@@ -92,7 +94,9 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                       margin: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(route.image),
+                          image: NetworkImage(
+                              // widget.allTrailList[index]['image-url']),
+                              route.image),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(8.0),
@@ -103,6 +107,7 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                           padding: const EdgeInsets.all(8.0),
                           color: Colors.black.withOpacity(0.5),
                           child: Text(
+                            // widget.allTrailList[index]['name'],
                             route.name,
                             style: const TextStyle(
                               color: Colors.white,

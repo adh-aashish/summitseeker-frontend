@@ -15,7 +15,7 @@ class MotherScreen extends StatefulWidget {
 
 class _MotherScreenState extends State<MotherScreen> {
   int _selectedIndex = 0;
-  List trendingList = [];
+  List allTrailList = [];
   Map userProfile = {};
   Map data = {};
 
@@ -27,9 +27,9 @@ class _MotherScreenState extends State<MotherScreen> {
         (ModalRoute.of(context)!.settings.arguments ?? {}) as Map;
     // parameters = jsonDecoder(jsonEncode(parameters));
     data = data.isNotEmpty ? data : jsonDecode(jsonEncode(parameters));
-    trendingList = trendingList.isNotEmpty
-        ? trendingList
-        : ((data['trendingList'] ?? []) as List);
+    allTrailList = allTrailList.isNotEmpty
+        ? allTrailList
+        : ((data['allTrailList'] ?? []) as List);
     userProfile = userProfile.isNotEmpty
         ? userProfile
         : ((data['userProfile'] ?? {}) as Map);
@@ -147,12 +147,12 @@ class _MotherScreenState extends State<MotherScreen> {
   }
 
   late final List<Widget> _pages = <Widget>[
-    HomeScreen(trendingList: trendingList),
+    HomeScreen(allTrailList: allTrailList),
     const Icon(
       Icons.explore,
       size: 150,
     ),
-    TrekkingRoutesPage(),
+    TrekkingRoutesPage(allTrailList: allTrailList),
     const Icon(
       Icons.notifications,
       size: 150,

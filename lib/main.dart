@@ -3,13 +3,13 @@ import 'package:frontend/screens/loading_screen.dart';
 import 'package:frontend/screens/mother_screen.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/screens/register_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(
       MaterialApp(
         theme: ThemeData(
-          textTheme: GoogleFonts.latoTextTheme(),
-        ),
+            // textTheme: GoogleFonts.latoTextTheme(),
+            ),
         initialRoute: '/login',
         routes: {
           '/': (context) => const MotherScreen(),
