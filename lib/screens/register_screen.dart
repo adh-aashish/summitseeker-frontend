@@ -481,9 +481,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         _formKey.currentState?.save();
-                        print('Name: $_name');
-                        print('Email: $_email');
-                        print('Password: $_password');
+                        // print('Name: $_name');
+                        // print('Email: $_email');
+                        // print('Password: $_password');
                       }
                     },
                     child: Text('Submit'),
