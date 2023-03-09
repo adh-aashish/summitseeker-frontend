@@ -74,39 +74,62 @@ class _TrekGuidesPageState extends State<TrekGuidesPage> {
     return Theme(
         data: ThemeData.dark(),
         child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: const Text(
+                "Available Guides",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationPage()),
+                    );
+                  },
+                  icon: const Icon(Icons.arrow_forward_rounded),
+                  iconSize: 30,
+                )
+              ],
+            ),
             body: Container(
                 decoration: const BoxDecoration(
                   color: null,
                 ),
                 padding: const EdgeInsets.all(15.0),
                 child: Column(children: [
-                  const SizedBox(height: 60),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Available Guides",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotificationPage()),
-                            );
-                          },
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          iconSize: 30,
-                        )
-                      ],
-                    ),
-                  ),
+                  const SizedBox(height: 20),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       const Text(
+                  //         "Available Guides",
+                  //         style: TextStyle(
+                  //           fontSize: 25,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //       IconButton(
+                  //         onPressed: () {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => NotificationPage()),
+                  //           );
+                  //         },
+                  //         icon: const Icon(Icons.arrow_forward_rounded),
+                  //         iconSize: 30,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                       child: isLoading
                           ? Center(

@@ -74,9 +74,69 @@ class _NotificationPageState extends State<NotificationPage>
                   controller: _tabController,
                   children: [
                     Center(
-                      child: Text(
-                        "Enquired Tab",
-                        style: TextStyle(color: Colors.white),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: null,
+                        ),
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(children: [
+                          const SizedBox(height: 60),
+                          const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Available Guides",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: guides.length,
+                              itemBuilder: (context, index) {
+                                final guide = guides[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    //TODO: prompt hiring the guide.
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.4),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: SizedBox(
+                                      height: 115,
+                                      child: ListTile(
+                                        contentPadding: const EdgeInsets.only(
+                                            top: 8.0, left: 5, right: 5),
+                                        leading: CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage(guide.image),
+                                        ),
+                                        title: Text(guide.name),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                '${guide.treksCompleted} treks completed'),
+                                            Text('${guide.gender} guide'),
+                                            Text(
+                                                'Languages spoken: ${guide.languagesSpoken.join(', ')}'),
+                                          ],
+                                        ),
+                                        trailing: Text('\$${guide.price}/day'),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ]),
                       ),
                     ),
                     Center(
