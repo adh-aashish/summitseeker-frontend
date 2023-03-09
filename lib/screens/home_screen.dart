@@ -285,30 +285,86 @@ class _HomeScreenState extends State<HomeScreen>
             //         );
             //       }),
             // )
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 40, vertical: 20),
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15.0),
+            // Padding(
+            // padding: const EdgeInsetsDirectional.symmetric(
+            //     horizontal: 40, vertical: 20),
+
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 20),
+                  child: Text(
+                    "Guides",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 174, 171, 171),
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 45, vertical: 25),
-                    child: (widget.userProfile['userType'] == 'TR')
-                        ? Row(
-                            children: [
-                              Icon(
-                                Icons.nordic_walking,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                size: 50.0,
-                              ),
-                              Expanded(child: Container()),
-                              ElevatedButton(
-                                onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Column(
+              children: [
+                Container(
+                  // width: double.infinity,
+                  margin: const EdgeInsets.symmetric(vertical: 4.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 30, vertical: 25),
+                  child: (widget.userProfile['userType'] == 'TR')
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: const [
+                                CircleAvatar(
+                                  radius: 25.0,
+                                  backgroundImage:
+                                      AssetImage('assets/guide1.jpeg'),
+                                ),
+                                SizedBox(width: 5),
+                                CircleAvatar(
+                                  radius: 25.0,
+                                  backgroundImage:
+                                      AssetImage('assets/guide2.jpeg'),
+                                ),
+                                SizedBox(width: 5),
+                                CircleAvatar(
+                                  radius: 25.0,
+                                  backgroundImage:
+                                      AssetImage('assets/guide3.jpeg'),
+                                ),
+                              ],
+                            ),
+                            // Icon(
+                            //   Icons.nordic_walking,
+                            //   color: Color.fromARGB(255, 255, 255, 255),
+                            //   size: 50.0,
+                            // ),
+                            // Expanded(child: Container()),
+                            SizedBox(
+                              height: 45,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      '/bottomNavigationBar',
+                                      arguments: 2);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.black.withOpacity(0.4),
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
                                 child: const Text(
                                   "Hire Guides",
                                   style: TextStyle(
@@ -316,89 +372,83 @@ class _HomeScreenState extends State<HomeScreen>
                                     color: Color.fromARGB(255, 234, 234, 234),
                                   ),
                                 ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.black.withOpacity(0.4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
                               ),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Icon(
-                                Icons.directions_walk_outlined,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                size: 50.0,
-                              ),
-                              Expanded(child: Container()),
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  "Survey Trials",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    color: Color.fromARGB(255, 234, 234, 234),
-                                  ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.black.withOpacity(0.4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 45, vertical: 25),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.warning_amber,
-                          color: Color.fromARGB(197, 255, 225, 0),
-                          size: 50.0,
-                        ),
-                        Expanded(child: Container()),
-                        ElevatedButton(
-                          onPressed: () async {
-                            const phone = 'tel:911';
-                            if (await canLaunchUrl(Uri.parse(phone))) {
-                              await launchUrl(Uri.parse(phone));
-                            } else {
-                              throw 'Could not launch $phone';
-                            }
-                          },
-                          child: const Text(
-                            "Emergency!",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Color.fromARGB(255, 234, 234, 234),
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black.withOpacity(0.4),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            const Icon(
+                              Icons.directions_walk_outlined,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 50.0,
                             ),
-                          ),
+                            Expanded(child: Container()),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black.withOpacity(0.4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              child: const Text(
+                                "Survey Trials",
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Color.fromARGB(255, 234, 234, 234),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+                ),
+
+                // Container(
+                //   margin: const EdgeInsets.symmetric(vertical: 4.0),
+                //   decoration: BoxDecoration(
+                //     color: Colors.white.withOpacity(0.1),
+                //     borderRadius: BorderRadius.circular(15.0),
+                //   ),
+                //   padding: EdgeInsetsDirectional.symmetric(
+                //       horizontal: 45, vertical: 25),
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.warning_amber,
+                //         color: Color.fromARGB(197, 255, 225, 0),
+                //         size: 50.0,
+                //       ),
+                //       Expanded(child: Container()),
+                //       ElevatedButton(
+                //         onPressed: () async {
+                //           const phone = 'tel:911';
+                //           if (await canLaunchUrl(Uri.parse(phone))) {
+                //             await launchUrl(Uri.parse(phone));
+                //           } else {
+                //             throw 'Could not launch $phone';
+                //           }
+                //         },
+                //         child: const Text(
+                //           "Emergency!",
+                //           style: TextStyle(
+                //             fontSize: 18.0,
+                //             color: Color.fromARGB(255, 234, 234, 234),
+                //           ),
+                //         ),
+                //         style: ElevatedButton.styleFrom(
+                //           backgroundColor: Colors.black.withOpacity(0.4),
+                //           shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(10.0),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
+            // )
           ],
         ),
       ),

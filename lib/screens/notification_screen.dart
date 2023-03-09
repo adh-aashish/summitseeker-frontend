@@ -3,7 +3,7 @@ import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/services/notification.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'available_guides.dart';
+// import 'available_guides.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
