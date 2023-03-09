@@ -4,6 +4,7 @@ import 'package:frontend/screens/notification_screen.dart';
 import 'package:frontend/widgets/drawer.dart';
 import 'hire_screen.dart';
 import 'home_screen.dart';
+import 'notification_screen.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -86,7 +87,7 @@ class _MotherScreenState extends State<MotherScreen> {
       size: 150,
     ),
     TrekkingRoutesPage(allTrailList: allTrailList),
-    const NotificationScreen()
+    NotificationPage(),
   ];
 
   void _onItemTapped(int index) {

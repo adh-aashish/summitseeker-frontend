@@ -98,8 +98,7 @@ class _TrekGuidesPageState extends State<TrekGuidesPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NotificationScreen()),
+                                  builder: (context) => NotificationPage()),
                             );
                           },
                           icon: const Icon(Icons.arrow_forward_rounded),
