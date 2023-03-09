@@ -36,7 +36,7 @@ Future<Map> getTrailDetails(int routeId) async {
       routeDetails["average_difficulty"] = data["average_difficulty"];
       routeDetails["links"] = data["links"];
       routeDetails["reviews"] = await getTrailReviews(routeId);
-      routeDetails["guides"] = await getTrailGuides(routeId);
+      // routeDetails["guides"] = await getTrailGuides(routeId);
     } else {
       if (body["validation_error"]) {
         print(body["errors"]);

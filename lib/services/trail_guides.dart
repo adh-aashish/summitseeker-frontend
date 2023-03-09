@@ -1,25 +1,17 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:frontend/utils/token.dart';
+import 'package:frontend/utils/http_utils.dart';
 
-Future<List> getTrailGuides(int routeId) async {
+Future<List> getTrailGuides(int routeIndex, String startDate) async {
+  List res = [];
   List allGuidesOfRoute = [];
-  String token = await getToken();
-  // TODO: handle this
-  if (token == 'Expired') {
-    throw "TokenInvalid";
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-    //   (route) => false,
-    // );
-  }
   try {
-    var response = await http.get(
-      Uri.parse('http://74.225.249.44/api/trails/$routeId/guides'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
-    final body = await jsonDecode(response.body);
+    Map data = {};
+    data["start_date"] = startDate;
+    var response = await HttpService.postReq(
+        'http://74.225.249.44/api/trails/$routeIndex/guides/', data);
+    print(response.body);
+    Map body = await jsonDecode(response.body);
+
     if (body["token_invalid"]) {
       print("Invalid token");
       // need to implement logout from here
@@ -40,17 +32,19 @@ Future<List> getTrailGuides(int routeId) async {
         allGuidesOfRoute.add(newMap);
         print(newMap);
       }
+      res = [true, allGuidesOfRoute];
     } else {
       if (body["validation_error"]) {
-        print(body["errors"]);
+        // print(body["errors"]);
+        res = [false, body["errors"]];
       } else {
-        print(body["message"]);
+        // print(body["message"]);
+        res = [false, body["message"]];
       }
     }
-
-    return allGuidesOfRoute;
+    return res;
   } catch (e) {
-    print("Error while getting trending list");
-    throw "Error while getting trending list";
+    res = [false, e.toString()];
+    return res;
   }
 }

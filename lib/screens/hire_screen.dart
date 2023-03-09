@@ -15,7 +15,7 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
   final List<TrekkingRoute> _routes = [];
   List<TrekkingRoute> _filteredRoutes = [];
 
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -112,8 +112,7 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
               ),
 
               //--------------------------------------------------//
-              //--------------------------------------------------//
-              //--------------------------------------------------//
+
               ((_searchController.text.isNotEmpty) &&
                       !(_filteredRoutes
                           .any((obj) => obj.name == _searchController.text)))
@@ -218,92 +217,51 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                 ),
               ),
 
-              //------------------------------------------------------------//
-              // TextField(
-              //   controller: _startDateController,
-              //   decoration: InputDecoration(
-              //     hintText: 'YYYY-MM-DD',
-              //     labelText: 'trek start date',
-              //   ),
-              //   keyboardType: TextInputType.datetime,
-              // ),
-              // TextField(
-              //   controller: _deadlineController,
-              //   decoration: InputDecoration(
-              //     hintText: 'YYYY-MM-DD',
-              //     labelText: 'deadline for responding to enquiry.',
-              //   ),
-              //   keyboardType: TextInputType.datetime,
-              // ),
-              // SizedBox(height: 16),
-              //------------------------------------------------------------//
               const SizedBox(height: 36),
               ElevatedButton(
                 child: const Text('Submit'),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => TrekGuidesPage(
-                  //       routeIndex: _filteredRoutes[index].index,
-                  //     ),
-                  //   ),
-                  // );
+                  String startDate = '';
+                  String deadline = '';
+                  String month = '';
+                  String day = '';
+                  if (selectedStartDate.month < 10) {
+                    month = '0${selectedStartDate.month}';
+                  } else {
+                    month = '${selectedStartDate.month}';
+                  }
+                  if (selectedStartDate.day < 10) {
+                    day = '0${selectedStartDate.day}';
+                  } else {
+                    day = '${selectedStartDate.day}';
+                  }
+                  startDate = '${selectedStartDate.year}-$month-$day';
+
+                  if (selectedDeadlineDate.month < 10) {
+                    month = '0${selectedDeadlineDate.month}';
+                  } else {
+                    month = '${selectedDeadlineDate.month}';
+                  }
+                  if (selectedDeadlineDate.day < 10) {
+                    day = '0${selectedDeadlineDate.day}';
+                  } else {
+                    day = '${selectedDeadlineDate.day}';
+                  }
+
+                  deadline = '${selectedDeadlineDate.year}-$month-$day';
+                  // print(startDate);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrekGuidesPage(
+                        routeIndex: _filteredRoutes[0].index,
+                        startDate: startDate,
+                        deadline: deadline,
+                      ),
+                    ),
+                  );
                 },
               ),
-              //--------------------------------------------------//
-              //--------------------------------------------------//
-              //--------------------------------------------------//
-
-              // Expanded(
-              //   child: GridView.builder(
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 2),
-              //     itemCount: _filteredRoutes.length,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       TrekkingRoute route = _filteredRoutes[index];
-              //       return GestureDetector(
-              //         onTap: () {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => TrekGuidesPage(
-              //                 routeIndex: route.index,
-              //               ),
-              //             ),
-              //           );
-              //         },
-              //         child: Container(
-              //           margin: const EdgeInsets.all(8.0),
-              //           decoration: BoxDecoration(
-              //             image: DecorationImage(
-              //               image: NetworkImage(
-              //                   // widget.allTrailList[index]['image-url']),
-              //                   route.image),
-              //               fit: BoxFit.cover,
-              //             ),
-              //             borderRadius: BorderRadius.circular(8.0),
-              //           ),
-              //           child: Align(
-              //             alignment: Alignment.bottomRight,
-              //             child: Container(
-              //               padding: const EdgeInsets.all(8.0),
-              //               color: Colors.black.withOpacity(0.5),
-              //               child: Text(
-              //                 // widget.allTrailList[index]['name'],
-              //                 route.name,
-              //                 style: const TextStyle(
-              //                   color: Colors.white,
-              //                   fontSize: 16.0,
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

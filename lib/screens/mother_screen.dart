@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/notification_screen.dart';
 import 'package:frontend/widgets/drawer.dart';
 import 'hire_screen.dart';
 import 'home_screen.dart';
@@ -19,7 +20,7 @@ class _MotherScreenState extends State<MotherScreen> {
   Map userProfile = {};
   Map data = {};
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,6 @@ class _MotherScreenState extends State<MotherScreen> {
     userProfile = userProfile.isNotEmpty
         ? userProfile
         : ((data['userProfile'] ?? {}) as Map);
-    // print("in mother screen\n");
-    // print(parameters);
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -52,75 +51,9 @@ class _MotherScreenState extends State<MotherScreen> {
         drawer: MyDrawer(
           userProfile: userProfile,
         ),
-        // drawer: Drawer(
-        //   child: ListView(
-        //     padding: EdgeInsets.zero,
-        //     children: <Widget>[
-        //       DrawerHeader(
-        //         decoration: BoxDecoration(
-        //           color: Colors.blue,
-        //         ),
-        //         child: Text(
-        //           'Drawer Header',
-        //           style: TextStyle(
-        //             color: Colors.white,
-        //             fontSize: 24,
-        //           ),
-        //         ),
-        //       ),
-        //       ListTile(
-        //         leading: Icon(Icons.settings),
-        //         title: Text('Settings'),
-        //         onTap: () {
-        //           // code to handle onTap
-        //         },
-        //       ),
-        //       ListTile(
-        //         leading: Icon(Icons.info),
-        //         title: Text('About'),
-        //         onTap: () {
-        //           // code to handle onTap
-        //         },
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // appBar: AppBar(
-        //   toolbarHeight: 0,
-        //   backgroundColor: Colors.white.withOpacity(0),
-        //   elevation: 0.0,
-        //   leading: IconButton(
-        //     icon: const Icon(
-        //       Icons.sort,
-        //       color: Colors.grey,
-        //       size: 30.0,
-        //     ),
-        //     onPressed: () {},
-        //   ),
-        //   actions: [
-        //     Padding(
-        //         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-        //         child: IconButton(
-        //           onPressed: () {},
-        //           icon: const CircleAvatar(
-        //             radius: 15.0,
-        //             backgroundImage: AssetImage('assets/traveller_avatar.png'),
-        //           ),
-        //         )),
-        //   ],
-        // ),
-        body: Container(
-          // decoration: const BoxDecoration(
-          //   gradient: LinearGradient(
-          //     colors: [Colors.blue, Colors.green],
-          //     begin: Alignment.topLeft,
-          //     end: Alignment.bottomRight,
-          //   ),
-          // ),
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          ),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
             unselectedFontSize: 0,
@@ -153,10 +86,7 @@ class _MotherScreenState extends State<MotherScreen> {
       size: 150,
     ),
     TrekkingRoutesPage(allTrailList: allTrailList),
-    const Icon(
-      Icons.notifications,
-      size: 150,
-    ),
+    const NotificationScreen()
   ];
 
   void _onItemTapped(int index) {
