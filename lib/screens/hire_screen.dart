@@ -14,7 +14,7 @@ class TrekkingRoutesPage extends StatefulWidget {
 class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
   final List<TrekkingRoute> _routes = [];
   List<TrekkingRoute> _filteredRoutes = [];
-
+  late TrekkingRoute _selectedRoute;
   TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
@@ -241,14 +241,21 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
               ElevatedButton(
                 child: const Text('Submit'),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => TrekGuidesPage(
-                  //       routeIndex: _filteredRoutes[index].index,
-                  //     ),
-                  //   ),
-                  // );
+                  if ((_filteredRoutes
+                      .any((obj) => obj.name == _searchController.text))) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrekGuidesPage(
+                          //index of _filteredRoutes element whose name matches the _searchController text.
+                          routeIndex: _filteredRoutes
+                              .firstWhere((route) =>
+                                  route.name == _searchController.text)
+                              .index,
+                        ),
+                      ),
+                    );
+                  }
                 },
               ),
               //--------------------------------------------------//
