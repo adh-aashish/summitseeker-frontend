@@ -35,53 +35,59 @@ class _MotherScreenState extends State<MotherScreen> {
     userProfile = userProfile.isNotEmpty
         ? userProfile
         : ((data['userProfile'] ?? {}) as Map);
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 0, 18, 31),
-            Color.fromARGB(129, 0, 138, 180)
-          ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
+    //print(userProfile['userType'].toString());
+    return Theme(
+      data: ThemeData.dark(),
+      child: Container(
+        decoration: const BoxDecoration(
+          // gradient: LinearGradient(
+          //   colors: [
+          //     Color.fromARGB(255, 0, 18, 31),
+          //     Color.fromARGB(129, 0, 138, 180)
+          //   ],
+          //   begin: Alignment.bottomCenter,
+          //   end: Alignment.topCenter,
+          // ),
+          color: Color.fromARGB(255, 48, 48, 48),
         ),
-      ),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: Colors.white.withOpacity(0),
-        drawer: MyDrawer(
-          userProfile: userProfile,
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: Colors.white.withOpacity(0),
+          drawer: MyDrawer(
+            userProfile: userProfile,
+          ),
+          body: IndexedStack(
+            index: _selectedIndex,
+            children: _pages,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+              unselectedFontSize: 0,
+              selectedFontSize: 0,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black.withOpacity(0.25),
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white.withOpacity(0.5),
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
+              elevation: 0,
+              items: const [
+                BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
+                BottomNavigationBarItem(
+                    label: "Explore", icon: Icon(Icons.explore)),
+                BottomNavigationBarItem(
+                    label: "Hire", icon: Icon(Icons.hiking)),
+                BottomNavigationBarItem(
+                    label: "Me", icon: Icon(Icons.notifications)),
+              ]),
         ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-            unselectedFontSize: 0,
-            selectedFontSize: 0,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.black.withOpacity(0.25),
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(0.5),
-            showUnselectedLabels: false,
-            showSelectedLabels: false,
-            elevation: 0,
-            items: const [
-              BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
-              BottomNavigationBarItem(
-                  label: "Explore", icon: Icon(Icons.explore)),
-              BottomNavigationBarItem(label: "Hire", icon: Icon(Icons.hiking)),
-              BottomNavigationBarItem(
-                  label: "Me", icon: Icon(Icons.notifications)),
-            ]),
       ),
     );
   }
 
   late final List<Widget> _pages = <Widget>[
-    HomeScreen(allTrailList: allTrailList),
+    HomeScreen(allTrailList: allTrailList, userProfile: userProfile),
     const Icon(
       Icons.explore,
       size: 150,

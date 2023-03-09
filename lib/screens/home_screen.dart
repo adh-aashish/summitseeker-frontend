@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/search_bar.dart';
 import 'mother_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   final List allTrailList;
-  const HomeScreen({required this.allTrailList, super.key});
+  final Map userProfile;
+  const HomeScreen(
+      {required this.allTrailList, required this.userProfile, super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -214,75 +217,187 @@ class _HomeScreenState extends State<HomeScreen>
                 ],
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              child: const Text(
-                "Explore more...",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Color.fromARGB(255, 229, 229, 229),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              height: 120,
-              width: double.maxFinite,
-              margin: const EdgeInsets.only(left: 20),
-              child: ListView.builder(
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(right: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            // margin: const EdgeInsets.only(right: 50),
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(255, 0, 0, 0)
-                                        .withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(20),
-                                color: const Color.fromARGB(255, 204, 204, 204)
-                                    .withOpacity(0.2),
-                                image: DecorationImage(
-                                    opacity: 0.6,
-                                    image: AssetImage(
-                                        "img/${images.keys.elementAt(index)}"),
-                                    fit: BoxFit.cover)),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            child: Text(
-                              images.values.elementAt(index),
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 159, 159, 159),
+            const SizedBox(height: 10),
+            // Container(
+            //   alignment: Alignment.centerLeft,
+            //   margin: const EdgeInsets.only(left: 20, right: 20),
+            //   child: const Text(
+            //     "Explore More...",
+            //     style: TextStyle(
+            //       fontSize: 20.0,
+            //       color: Color.fromARGB(255, 229, 229, 229),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 30,
+            // ),
+            // Container(
+            //   height: 120,
+            //   width: double.maxFinite,
+            //   margin: const EdgeInsets.only(left: 20),
+            //   child: ListView.builder(
+            //       itemCount: 4,
+            //       scrollDirection: Axis.horizontal,
+            //       itemBuilder: (_, index) {
+            //         return Container(
+            //           margin: const EdgeInsets.only(right: 30),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.center,
+            //             children: [
+            //               Container(
+            //                 // margin: const EdgeInsets.only(right: 50),
+            //                 width: 60,
+            //                 height: 60,
+            //                 decoration: BoxDecoration(
+            //                     boxShadow: [
+            //                       BoxShadow(
+            //                         color: Color.fromARGB(255, 0, 0, 0)
+            //                             .withOpacity(0.5),
+            //                         spreadRadius: 2,
+            //                         blurRadius: 5,
+            //                         offset: Offset(
+            //                             0, 3), // changes position of shadow
+            //                       ),
+            //                     ],
+            //                     borderRadius: BorderRadius.circular(20),
+            //                     color: const Color.fromARGB(255, 204, 204, 204)
+            //                         .withOpacity(0.2),
+            //                     image: DecorationImage(
+            //                         opacity: 0.6,
+            //                         image: AssetImage(
+            //                             "img/${images.keys.elementAt(index)}"),
+            //                         fit: BoxFit.cover)),
+            //               ),
+            //               const SizedBox(
+            //                 height: 20,
+            //               ),
+            //               Container(
+            //                 child: Text(
+            //                   images.values.elementAt(index),
+            //                   style: const TextStyle(
+            //                     color: Color.fromARGB(255, 159, 159, 159),
+            //                   ),
+            //                 ),
+            //               )
+            //             ],
+            //           ),
+            //         );
+            //       }),
+            // )
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 40, vertical: 20),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 45, vertical: 25),
+                    child: (widget.userProfile['userType'] == 'TR')
+                        ? Row(
+                            children: [
+                              Icon(
+                                Icons.nordic_walking,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                size: 50.0,
                               ),
-                            ),
+                              Expanded(child: Container()),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  "Hire Guides",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Color.fromARGB(255, 234, 234, 234),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.black.withOpacity(0.4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ],
                           )
-                        ],
-                      ),
-                    );
-                  }),
+                        : Row(
+                            children: [
+                              Icon(
+                                Icons.directions_walk_outlined,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                size: 50.0,
+                              ),
+                              Expanded(child: Container()),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  "Survey Trials",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Color.fromARGB(255, 234, 234, 234),
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.black.withOpacity(0.4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 45, vertical: 25),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber,
+                          color: Color.fromARGB(197, 255, 225, 0),
+                          size: 50.0,
+                        ),
+                        Expanded(child: Container()),
+                        ElevatedButton(
+                          onPressed: () async {
+                            const phone = 'tel:911';
+                            if (await canLaunchUrl(Uri.parse(phone))) {
+                              await launchUrl(Uri.parse(phone));
+                            } else {
+                              throw 'Could not launch $phone';
+                            }
+                          },
+                          child: const Text(
+                            "Emergency!",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Color.fromARGB(255, 234, 234, 234),
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black.withOpacity(0.4),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),

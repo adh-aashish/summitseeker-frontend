@@ -70,7 +70,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         userProfile["first_name"] = data["first_name"];
         userProfile["last_name"] = data["last_name"];
         userProfile["email"] = data["email"];
-        userProfile["user_type"] = data["user_type"];
+        userProfile["userType"] = data["userType"];
       } else {
         if (body["validation_error"]) {
           print(body["errors"]);
