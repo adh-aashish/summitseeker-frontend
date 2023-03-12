@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/services/user_profile.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'edit_profile.dart';
 
@@ -95,7 +96,15 @@ class _ProfilePageState extends State<ProfilePage> {
         } else {
           showSnackBar(false, response[1]);
         }
-        reviewList = [1];
+        reviewList = [
+          {
+            "first_name": "Aashish",
+            "last_name": "Adhikari",
+            "rating": 4.5,
+            "comment":
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's ",
+          }
+        ];
         isLoading = false;
       });
     } catch (e) {
@@ -362,19 +371,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.black.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: SizedBox(
-                                height: 115,
+                              child: IntrinsicHeight(
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.only(
-                                      top: 8.0, left: 5, right: 5),
+                                      top: 8.0, left: 5, right: 5, bottom: 8.0),
                                   leading: const CircleAvatar(
                                     backgroundImage: AssetImage('img/hire.png'),
                                   ),
-                                  // title: Text(
-                                  //     '${guide["first_name"]} ${guide["last_name"]}'),
+                                  title: Text(
+                                      '${review["first_name"]} ${review["last_name"]}'),
                                   subtitle: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    children: [
+                                      RatingBarIndicator(
+                                        rating: 3.5,
+                                        direction: Axis.horizontal,
+                                        itemCount: 5,
+                                        itemPadding: const EdgeInsets.symmetric(
+                                            horizontal: 2.0),
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        itemSize: 20,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Expanded(child: Text(review["comment"])),
+                                    ],
                                   ),
                                 ),
                               ),
