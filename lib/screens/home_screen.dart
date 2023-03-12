@@ -6,8 +6,12 @@ import 'package:url_launcher/url_launcher.dart';
 class HomeScreen extends StatefulWidget {
   final List allTrailList;
   final Map userProfile;
+  final Function hiringPage;
   const HomeScreen(
-      {required this.allTrailList, required this.userProfile, super.key});
+      {required this.allTrailList,
+      required this.userProfile,
+      required this.hiringPage,
+      super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -289,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen>
             // padding: const EdgeInsetsDirectional.symmetric(
             //     horizontal: 40, vertical: 20),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: const [
@@ -353,9 +357,7 @@ class _HomeScreenState extends State<HomeScreen>
                               height: 45,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushNamed(
-                                      '/bottomNavigationBar',
-                                      arguments: 2);
+                                  widget.hiringPage();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:

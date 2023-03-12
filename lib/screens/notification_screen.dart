@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/services/notification.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:frontend/services/enquiry.dart';
 
 // import 'available_guides.dart';
 
 class NotificationPage extends StatefulWidget {
+  // final _refreshKey;
   const NotificationPage({super.key});
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -110,135 +112,137 @@ class _NotificationPageState extends State<NotificationPage>
                                 color: null,
                               ),
                               padding: const EdgeInsets.all(15.0),
-                              child: Column(children: [
-                                const SizedBox(height: 30),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: enquiredGuideList.length,
-                                    itemBuilder: (context, index) {
-                                      final guide = enquiredGuideList[index]
-                                          ["guide"]["user"];
-                                      final enquiry = enquiredGuideList[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          //TODO: prompt hiring the guide.
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 4.0),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: SizedBox(
-                                            height: 115,
-                                            child: ListTile(
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      top: 8.0,
-                                                      left: 5,
-                                                      right: 5),
-                                              leading: const CircleAvatar(
-                                                backgroundImage:
-                                                    AssetImage('img/hire.png'),
-                                              ),
-                                              title: Text(
-                                                  '${guide["first_name"]} ${guide["last_name"]}'),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const SizedBox(height: 5),
-                                                  Text(
-                                                      '${enquiry["trail"]["name"]}'),
-                                                  Text(
-                                                      'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
-                                                  Text(
-                                                    'Rate: Rs ${enquiry["money_rate"]}/day',
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                              trailing: enquiry["status"] ==
-                                                      'RQ'
-                                                  ? ElevatedButton.icon(
-                                                      onPressed: () async {
-                                                        // List res = await sendEnquiry(
-                                                        //     widget.routeIndex,
-                                                        //     widget.startDate,
-                                                        //     widget.deadline,
-                                                        //     guide["id"],
-                                                        //     guide["money_rate"]);
-                                                        // if (res[0]) {
-                                                        //   showSnackBar(
-                                                        //       true, "Enquiry sent");
-                                                        //   setState(() {
-                                                        //     getGuides();
-                                                        //     isLoading = true;
-                                                        //   });
-                                                        // }
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.close),
-                                                      label:
-                                                          const Text('Cancel'),
-                                                      style: ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          foregroundColor:
-                                                              Colors.red,
-                                                          side:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .red)),
-                                                    )
-                                                  : ElevatedButton.icon(
-                                                      onPressed: () async {
-                                                        // List res = await sendEnquiry(
-                                                        //     widget.routeIndex,
-                                                        //     widget.startDate,
-                                                        //     widget.deadline,
-                                                        //     guide["id"],
-                                                        //     guide["money_rate"]);
-                                                        // if (res[0]) {
-                                                        //   showSnackBar(
-                                                        //       true, "Enquiry sent");
-                                                        //   setState(() {
-                                                        //     getGuides();
-                                                        //     isLoading = true;
-                                                        //   });
-                                                        // }
-                                                      },
-                                                      icon:
-                                                          const Icon(Icons.add),
-                                                      label:
-                                                          const Text('Enquire'),
-                                                      style: ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          foregroundColor:
-                                                              Colors.green,
-                                                          side:
-                                                              const BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .green)),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 30),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: enquiredGuideList.length,
+                                      itemBuilder: (context, index) {
+                                        final guide = enquiredGuideList[index]
+                                            ["guide"]["user"];
+                                        final enquiry =
+                                            enquiredGuideList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            //TODO: prompt hiring the guide.
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 4.0),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.black.withOpacity(0.4),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: SizedBox(
+                                              height: 115,
+                                              child: ListTile(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        top: 8.0,
+                                                        left: 5,
+                                                        right: 5),
+                                                leading: const CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'img/hire.png'),
+                                                ),
+                                                title: Text(
+                                                    '${guide["first_name"]} ${guide["last_name"]}'),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                        '${enquiry["trail"]["name"]}'),
+                                                    Text(
+                                                        'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
+                                                    Text(
+                                                      'Rate: Rs ${enquiry["money_rate"]}/day',
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
+                                                  ],
+                                                ),
+                                                trailing: enquiry["status"] ==
+                                                        'RQ'
+                                                    ? ElevatedButton.icon(
+                                                        onPressed: () async {
+                                                          print(enquiry["guide"]
+                                                              ["id"]);
+                                                          List res =
+                                                              await cancelEnquiry(
+                                                                  enquiry[
+                                                                      "id"]);
+                                                          if (res[0]) {
+                                                            showSnackBar(true,
+                                                                "Enquiry Deleted");
+                                                            setState(() {
+                                                              getGuidesList();
+                                                              isLoading = true;
+                                                            });
+                                                          }
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.close),
+                                                        label: const Text(
+                                                            'Cancel'),
+                                                        style: ElevatedButton.styleFrom(
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            foregroundColor:
+                                                                Colors.red,
+                                                            side:
+                                                                const BorderSide(
+                                                                    width: 1,
+                                                                    color: Colors
+                                                                        .red)),
+                                                      )
+                                                    : ElevatedButton.icon(
+                                                        onPressed: () async {
+                                                          // List res = await sendEnquiry(
+                                                          //     widget.routeIndex,
+                                                          //     widget.startDate,
+                                                          //     widget.deadline,
+                                                          //     guide["id"],
+                                                          //     guide["money_rate"]);
+                                                          // if (res[0]) {
+                                                          //   showSnackBar(
+                                                          //       true, "Enquiry sent");
+                                                          //   setState(() {
+                                                          //     getGuides();
+                                                          //     isLoading = true;
+                                                          //   });
+                                                          // }
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.add),
+                                                        label: const Text(
+                                                            'Enquire'),
+                                                        style: ElevatedButton.styleFrom(
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            foregroundColor:
+                                                                Colors.green,
+                                                            side: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .green)),
+                                                      ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ]),
+                                ],
+                              ),
                             ),
                           ),
                           Center(
@@ -247,31 +251,33 @@ class _NotificationPageState extends State<NotificationPage>
                                 color: null,
                               ),
                               padding: const EdgeInsets.all(15.0),
-                              child: Column(children: [
-                                const SizedBox(height: 60),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: acceptedGuideList.length,
-                                    itemBuilder: (context, index) {
-                                      final guide = acceptedGuideList[index]
-                                          ["guide"]["user"];
-                                      final enquiry = acceptedGuideList[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          //TODO: prompt hiring the guide.
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 4.0),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: SizedBox(
-                                            height: 115,
-                                            child: ListTile(
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 60),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: acceptedGuideList.length,
+                                      itemBuilder: (context, index) {
+                                        final guide = acceptedGuideList[index]
+                                            ["guide"]["user"];
+                                        final enquiry =
+                                            acceptedGuideList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            //TODO: prompt hiring the guide.
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 4.0),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.black.withOpacity(0.4),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: SizedBox(
+                                              height: 115,
+                                              child: ListTile(
                                                 contentPadding:
                                                     const EdgeInsets.only(
                                                         top: 8.0,
@@ -331,14 +337,16 @@ class _NotificationPageState extends State<NotificationPage>
                                                                   width: 1,
                                                                   color: Colors
                                                                       .green)),
-                                                )),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ]),
+                                ],
+                              ),
                             ),
                           ),
                         ],

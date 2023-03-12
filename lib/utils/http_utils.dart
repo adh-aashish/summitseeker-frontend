@@ -32,7 +32,7 @@ class HttpService {
     if (withToken) {
       headers["Authorization"] = "Bearer $token";
     }
-    print(headers);
+    // print(headers);
     return await http.get(Uri.parse(url), headers: headers);
   }
 }

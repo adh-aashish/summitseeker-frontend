@@ -4,7 +4,7 @@ import 'package:frontend/screens/notification_screen.dart';
 import 'package:frontend/widgets/drawer.dart';
 import 'hire_screen.dart';
 import 'home_screen.dart';
-import 'notification_screen.dart';
+import 'package:frontend/widgets/common_navigation_bar.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -21,6 +21,59 @@ class _MotherScreenState extends State<MotherScreen> {
   Map userProfile = {};
   Map data = {};
 
+  // Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+  //   0: GlobalKey<NavigatorState>(),
+  //   1: GlobalKey<NavigatorState>(),
+  //   2: GlobalKey<NavigatorState>(),
+  // };
+
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>()
+  ];
+
+  late final List<Widget> _pages = <Widget>[
+    HomeScreen(
+        allTrailList: allTrailList,
+        userProfile: userProfile,
+        hiringPage: moveToHiringPage),
+    TrekkingRoutesPage(
+      allTrailList: allTrailList,
+      notificationPage: moveToNotificationPage,
+    ),
+    NotificationPage(
+      key: UniqueKey(),
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void moveToHiringPage() {
+    setState(() {
+      _selectedIndex = 1;
+    });
+  }
+
+  void moveToNotificationPage() {
+    setState(() {
+      _selectedIndex = 2;
+    });
+  }
+
+  // buildNavigator() {
+  //   return Navigator(
+  //     key: navigatorKeys[_selectedIndex],
+  //     onGenerateRoute: (RouteSettings settings) {
+  //       return MaterialPageRoute(
+  //           builder: (_) => _pages.elementAt(_selectedIndex));
+  //     },
+  //   );
+  // }
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -56,10 +109,31 @@ class _MotherScreenState extends State<MotherScreen> {
           drawer: MyDrawer(
             userProfile: userProfile,
           ),
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: _pages,
-          ),
+          // body: IndexedStack(
+          //   index: _selectedIndex,
+          //   children: _pages,
+          // ),
+          body: _pages[_selectedIndex],
+          // body: buildNavigator(),
+
+          //-----------------------------------------------------------------
+          // body: CommonBottomNavigationBar(
+          //   selectedIndex: _selectedIndex,
+          //   navigatorKeys: _navigatorKeys,
+          //   childrens: [
+          //     HomeScreen(
+          //         allTrailList: allTrailList,
+          //         userProfile: userProfile,
+          //         hiringPage: moveToHiringPage),
+          //     TrekkingRoutesPage(
+          //       allTrailList: allTrailList,
+          //       notificationPage: moveToNotificationPage,
+          //     ),
+          //     const NotificationPage(),
+          //   ],
+          // ),
+          //-----------------------------------------------------------------
+
           bottomNavigationBar: BottomNavigationBar(
               unselectedFontSize: 0,
               selectedFontSize: 0,
@@ -75,8 +149,6 @@ class _MotherScreenState extends State<MotherScreen> {
               items: const [
                 BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
                 BottomNavigationBarItem(
-                    label: "Explore", icon: Icon(Icons.explore)),
-                BottomNavigationBarItem(
                     label: "Hire", icon: Icon(Icons.hiking)),
                 BottomNavigationBarItem(
                     label: "Me", icon: Icon(Icons.notifications)),
@@ -84,21 +156,5 @@ class _MotherScreenState extends State<MotherScreen> {
         ),
       ),
     );
-  }
-
-  late final List<Widget> _pages = <Widget>[
-    HomeScreen(allTrailList: allTrailList, userProfile: userProfile),
-    const Icon(
-      Icons.explore,
-      size: 150,
-    ),
-    TrekkingRoutesPage(allTrailList: allTrailList),
-    NotificationPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }
