@@ -103,6 +103,17 @@ class _ProfilePageState extends State<ProfilePage> {
             "rating": 4.5,
             "comment":
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's ",
+            "photo":
+                "https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png",
+          },
+          {
+            "first_name": "Aashish",
+            "last_name": "Adhikari",
+            "rating": 4.5,
+            "comment":
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's ",
+            "photo":
+                "https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png",
           }
         ];
         isLoading = false;
@@ -147,268 +158,279 @@ class _ProfilePageState extends State<ProfilePage> {
           centerTitle: true,
           title: const Text('Profile'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: isLoading
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      SpinKitFadingFour(
-                        color: Colors.white,
-                        size: 30.0,
+        body: SingleChildScrollView(
+          child: Container(
+            height: 1000,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: isLoading
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          SpinKitFadingFour(
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                          SizedBox(height: 15.0),
+                          Text(
+                            'Loading...',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
                       ),
-                      SizedBox(height: 15.0),
-                      Text(
-                        'Loading...',
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 20),
-                        CircleAvatar(
-                          backgroundImage: AssetImage(_userInfo.profilePicture),
-                          radius: 40,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 20),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage(_userInfo.profilePicture),
+                              radius: 40,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              '${_userInfo.firstName} ${_userInfo.lastName}',
+                              style: TextStyle(
+                                color: Colors.amberAccent[200],
+                                fontSize: 28.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.email,
+                                  color: Colors.grey[400],
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  _userInfo.email,
+                                  style: TextStyle(
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.phone_callback,
+                                  color: Colors.grey[400],
+                                ),
+                                Text(
+                                  _userInfo.contactNumber,
+                                  style: TextStyle(
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 15),
+                            Text(
+                              '${_userInfo.userType}, ${_userInfo.gender == 'M' ? 'Male' : 'Female'}',
+                              style: const TextStyle(
+                                // color: Colors.grey[400],
+                                color: Color(0xffBB86FC),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          '${_userInfo.firstName} ${_userInfo.lastName}',
-                          style: TextStyle(
-                            color: Colors.amberAccent[200],
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.bold,
+                        Divider(
+                          height: 90.0,
+                          color: Colors.grey[800],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'DOB',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            letterSpacing: 2.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10.0),
+                                        Text(
+                                          _userInfo.dateOfBirth,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: 2.0,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ]),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Nationality',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          letterSpacing: 2.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10.0),
+                                      Text(
+                                        _userInfo.nationality,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 2.0,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 20.0),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Languages',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            letterSpacing: 2.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10.0),
+                                        Text(
+                                          _userInfo.languagesSpoken.join(','),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: 2.0,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ]),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Experience',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          letterSpacing: 2.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10.0),
+                                      Text(
+                                        _userInfo.experience,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 2.0,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 20.0),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.email,
-                              color: Colors.grey[400],
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              _userInfo.email,
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                          ],
+                        Divider(
+                          height: 60.0,
+                          color: Colors.grey[800],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.phone_callback,
-                              color: Colors.grey[400],
+                        // const SizedBox(height: 20),
+                        const Center(
+                          child: Text(
+                            "Reviews",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 174, 171, 171),
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              _userInfo.contactNumber,
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                        const SizedBox(width: 15),
-                        Text(
-                          '${_userInfo.userType}, ${_userInfo.gender == 'M' ? 'Male' : 'Female'}',
-                          style: const TextStyle(
-                            // color: Colors.grey[400],
-                            color: Color(0xffBB86FC),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
+                        const SizedBox(height: 30),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: reviewList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                reviewList[index]["photo"]),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                  '${reviewList[index]["first_name"]} ${reviewList[index]["last_name"]} '),
+                                              const SizedBox(height: 2),
+                                              RatingBarIndicator(
+                                                rating: 3.5,
+                                                direction: Axis.horizontal,
+                                                itemCount: 5,
+                                                itemPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 2.0),
+                                                itemBuilder: (context, _) =>
+                                                    const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                itemSize: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(reviewList[index]["comment"]),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
                     ),
-                    Divider(
-                      height: 90.0,
-                      color: Colors.grey[800],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'DOB',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        letterSpacing: 2.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10.0),
-                                    Text(
-                                      _userInfo.dateOfBirth,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        letterSpacing: 2.0,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ]),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Nationality',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      letterSpacing: 2.0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    _userInfo.nationality,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      letterSpacing: 2.0,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 20.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Languages',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        letterSpacing: 2.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10.0),
-                                    Text(
-                                      _userInfo.languagesSpoken.join(','),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        letterSpacing: 2.0,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ]),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Experience',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      letterSpacing: 2.0,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    _userInfo.experience,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      letterSpacing: 2.0,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 20.0),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      height: 60.0,
-                      color: Colors.grey[800],
-                    ),
-                    // const SizedBox(height: 20),
-                    const Center(
-                      child: Text(
-                        "Reviews",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 174, 171, 171),
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: reviewList.length,
-                        itemBuilder: (context, index) {
-                          final review = reviewList[index];
-                          return GestureDetector(
-                            onTap: () {
-                              //TODO: prompt hiring the guide.
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4.0),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.4),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: IntrinsicHeight(
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.only(
-                                      top: 8.0, left: 5, right: 5, bottom: 8.0),
-                                  leading: const CircleAvatar(
-                                    backgroundImage: AssetImage('img/hire.png'),
-                                  ),
-                                  title: Text(
-                                      '${review["first_name"]} ${review["last_name"]}'),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: 3.5,
-                                        direction: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemPadding: const EdgeInsets.symmetric(
-                                            horizontal: 2.0),
-                                        itemBuilder: (context, _) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        itemSize: 20,
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Expanded(child: Text(review["comment"])),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                ),
+            ),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -20,6 +20,7 @@ class _MotherScreenState extends State<MotherScreen> {
   List allTrailList = [];
   Map userProfile = {};
   Map data = {};
+  bool isGuide = false;
 
   // Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
   //   0: GlobalKey<NavigatorState>(),
@@ -27,24 +28,27 @@ class _MotherScreenState extends State<MotherScreen> {
   //   2: GlobalKey<NavigatorState>(),
   // };
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>()
-  ];
+  // final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+  //   GlobalKey<NavigatorState>(),
+  //   GlobalKey<NavigatorState>(),
+  //   GlobalKey<NavigatorState>()
+  // ];
 
   late final List<Widget> _pages = <Widget>[
     HomeScreen(
         allTrailList: allTrailList,
         userProfile: userProfile,
-        hiringPage: moveToHiringPage),
-    TrekkingRoutesPage(
-      allTrailList: allTrailList,
-      notificationPage: moveToNotificationPage,
-    ),
+        hiringPage: moveToHiringPage,
+        leaderboard: moveToLeaderBoard),
+    isGuide
+        ? TrekkingRoutesPage(
+            allTrailList: allTrailList,
+            notificationPage: moveToNotificationPage,
+          )
+        : Container(),
     NotificationPage(
-      key: UniqueKey(),
-    ),
+        // key: UniqueKey(),
+        ),
   ];
 
   void _onItemTapped(int index) {
@@ -54,6 +58,12 @@ class _MotherScreenState extends State<MotherScreen> {
   }
 
   void moveToHiringPage() {
+    setState(() {
+      _selectedIndex = 1;
+    });
+  }
+
+  void moveToLeaderBoard() {
     setState(() {
       _selectedIndex = 1;
     });
@@ -146,11 +156,15 @@ class _MotherScreenState extends State<MotherScreen> {
               showUnselectedLabels: false,
               showSelectedLabels: false,
               elevation: 0,
-              items: const [
-                BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
-                BottomNavigationBarItem(
-                    label: "Hire", icon: Icon(Icons.hiking)),
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
+                    label: "Home", icon: Icon(Icons.apps)),
+                isGuide
+                    ? const BottomNavigationBarItem(
+                        label: "Hire", icon: Icon(Icons.hiking))
+                    : const BottomNavigationBarItem(
+                        label: "LeaderBoard", icon: Icon(Icons.leaderboard)),
+                const BottomNavigationBarItem(
                     label: "Me", icon: Icon(Icons.notifications)),
               ]),
         ),

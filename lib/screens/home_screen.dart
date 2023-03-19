@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/search_bar.dart';
 import 'mother_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   final List allTrailList;
   final Map userProfile;
   final Function hiringPage;
+  final Function leaderboard;
   const HomeScreen(
       {required this.allTrailList,
       required this.userProfile,
       required this.hiringPage,
+      required this.leaderboard,
       super.key});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isGuide = true;
   var images = {
     "to-do-list.png": "Todo List",
     "hire.png": "Hire Guide",
@@ -169,8 +171,8 @@ class _HomeScreenState extends State<HomeScreen>
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset:
-                                    Offset(2, 2), // changes position of shadow
+                                offset: const Offset(
+                                    2, 2), // changes position of shadow
                               ),
                             ],
                             image: const DecorationImage(
@@ -357,7 +359,12 @@ class _HomeScreenState extends State<HomeScreen>
                               height: 45,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  widget.hiringPage();
+                                  if (isGuide) {
+                                    // do something
+                                    widget.leaderboard();
+                                  } else {
+                                    widget.hiringPage();
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
@@ -367,9 +374,9 @@ class _HomeScreenState extends State<HomeScreen>
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
-                                child: const Text(
-                                  "Hire Guides",
-                                  style: TextStyle(
+                                child: Text(
+                                  isGuide ? "Leader Board" : "Hire Guides",
+                                  style: const TextStyle(
                                     fontSize: 18.0,
                                     color: Color.fromARGB(255, 234, 234, 234),
                                   ),
