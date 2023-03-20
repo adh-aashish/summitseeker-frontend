@@ -4,7 +4,6 @@ import 'package:frontend/screens/notification_screen.dart';
 import 'package:frontend/widgets/drawer.dart';
 import 'hire_screen.dart';
 import 'home_screen.dart';
-import 'package:frontend/widgets/common_navigation_bar.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
