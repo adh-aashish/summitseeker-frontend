@@ -8,7 +8,8 @@ import 'package:frontend/services/enquiry.dart';
 
 class NotificationPage extends StatefulWidget {
   // final _refreshKey;
-  const NotificationPage({super.key});
+  late bool isGuide;
+  NotificationPage({required this.isGuide, super.key});
   @override
   State<NotificationPage> createState() => _NotificationPageState();
 }
@@ -18,8 +19,9 @@ class _NotificationPageState extends State<NotificationPage>
   late TabController _tabController;
   bool isLoading = true;
   List enquiredGuideList = [];
+  List enquiresList = [];
   List acceptedGuideList = [];
-  bool isGuide = true;
+  List hireList = [];
 
   void showSnackBar(bool success,
       [String message = "Unknown error occurred."]) {
@@ -65,8 +67,9 @@ class _NotificationPageState extends State<NotificationPage>
 
       setState(() {
         if (response[0]) {
-          enquiredGuideList = response[1]["All"];
-          acceptedGuideList = response[1]["Accepted"];
+          print(response[1]);
+          enquiresList = response[1]["All"];
+          hireList = response[1]["requested"];
         } else if (response[1] == 'token_expired') {
           Navigator.pushAndRemoveUntil(
             context,
@@ -86,8 +89,13 @@ class _NotificationPageState extends State<NotificationPage>
   @override
   void initState() {
     super.initState();
+    // widget.isGuide = false;
     _tabController = TabController(length: 2, vsync: this);
-    getEnquiredAndAcceptedGuidesList();
+    if (widget.isGuide) {
+      getEnquiresAndBookedTouristList();
+    } else {
+      getEnquiredAndAcceptedGuidesList();
+    }
   }
 
   @override
@@ -106,10 +114,10 @@ class _NotificationPageState extends State<NotificationPage>
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.grey,
                 tabs: [
-                  isGuide
+                  widget.isGuide
                       ? const Tab(text: "Enquiries")
                       : const Tab(text: "Enquired"),
-                  isGuide
+                  widget.isGuide
                       ? const Tab(text: "Bookings")
                       : const Tab(text: "Accepted"),
                 ],
@@ -135,27 +143,34 @@ class _NotificationPageState extends State<NotificationPage>
                     : TabBarView(
                         controller: _tabController,
                         children: [
-                          isGuide
-                              ? Center()
-                              : Center(
+                          widget.isGuide
+                              ? Center(
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: null,
                                     ),
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
-                                      children: [
-                                        const SizedBox(height: 30),
-                                        Expanded(
-                                          child: ListView.builder(
-                                            itemCount: enquiredGuideList.length,
-                                            itemBuilder: (context, index) {
-                                              final guide =
-                                                  enquiredGuideList[index]
-                                                      ["guide"]["user"];
-                                              final enquiry =
-                                                  enquiredGuideList[index];
-                                              return GestureDetector(
+                                      children: (() {
+                                        List<Widget> widgets = [];
+                                        if (enquiresList.isEmpty) {
+                                          return [
+                                            const Center(
+                                              child: Text("No Enquiries."),
+                                            ),
+                                          ];
+                                        } else {
+                                          for (int index = 0;
+                                              index < enquiresList.length;
+                                              index++) {
+                                            final guide = enquiresList[index]
+                                                ["guide"]["user"];
+                                            final enquiry = enquiresList[index];
+                                            widgets.add(
+                                              const SizedBox(height: 20),
+                                            );
+                                            widgets.add(
+                                              GestureDetector(
                                                 onTap: () {
                                                   //TODO: prompt hiring the guide.
                                                 },
@@ -287,16 +302,15 @@ class _NotificationPageState extends State<NotificationPage>
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        return widgets;
+                                      }()),
                                     ),
                                   ),
-                                ),
-                          isGuide
-                              ? Center()
+                                )
                               : Center(
                                   child: Container(
                                     decoration: const BoxDecoration(
@@ -304,18 +318,199 @@ class _NotificationPageState extends State<NotificationPage>
                                     ),
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
-                                      children: [
-                                        const SizedBox(height: 60),
-                                        Expanded(
-                                          child: ListView.builder(
-                                            itemCount: acceptedGuideList.length,
-                                            itemBuilder: (context, index) {
-                                              final guide =
-                                                  acceptedGuideList[index]
-                                                      ["guide"]["user"];
-                                              final enquiry =
-                                                  acceptedGuideList[index];
-                                              return GestureDetector(
+                                      children: (() {
+                                        List<Widget> widgets = [];
+
+                                        if (enquiredGuideList.isEmpty) {
+                                          return [
+                                            const Center(
+                                                child: Text("No Enquiries."))
+                                          ];
+                                        } else {
+                                          for (int index = 0;
+                                              index < enquiredGuideList.length;
+                                              index++) {
+                                            final guide =
+                                                enquiredGuideList[index]
+                                                    ["guide"]["user"];
+                                            final enquiry =
+                                                enquiredGuideList[index];
+                                            widgets.add(
+                                              const SizedBox(height: 20),
+                                            );
+                                            widgets.add(
+                                              GestureDetector(
+                                                onTap: () {
+                                                  //TODO: prompt hiring the guide.
+                                                },
+                                                child: Container(
+                                                  margin: const EdgeInsets
+                                                      .symmetric(vertical: 4.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black
+                                                        .withOpacity(0.4),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  child: SizedBox(
+                                                    height: 115,
+                                                    child: ListTile(
+                                                      contentPadding:
+                                                          const EdgeInsets.only(
+                                                              top: 8.0,
+                                                              left: 5,
+                                                              right: 5),
+                                                      leading:
+                                                          const CircleAvatar(
+                                                        backgroundImage:
+                                                            AssetImage(
+                                                                'img/hire.png'),
+                                                      ),
+                                                      title: Text(
+                                                          '${guide["first_name"]} ${guide["last_name"]}'),
+                                                      subtitle: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const SizedBox(
+                                                              height: 5),
+                                                          Text(
+                                                              '${enquiry["trail"]["name"]}'),
+                                                          Text(
+                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
+                                                          Text(
+                                                            'Rate: Rs ${enquiry["money_rate"]}/day',
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      trailing: enquiry[
+                                                                  "status"] ==
+                                                              'RQ'
+                                                          ? ElevatedButton.icon(
+                                                              onPressed:
+                                                                  () async {
+                                                                print(enquiry[
+                                                                        "guide"]
+                                                                    ["id"]);
+                                                                List res =
+                                                                    await cancelEnquiry(
+                                                                        enquiry[
+                                                                            "id"]);
+                                                                if (res[0]) {
+                                                                  showSnackBar(
+                                                                      true,
+                                                                      "Enquiry Deleted");
+                                                                  setState(() {
+                                                                    getEnquiredAndAcceptedGuidesList();
+                                                                    isLoading =
+                                                                        true;
+                                                                  });
+                                                                }
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.close),
+                                                              label: const Text(
+                                                                  'Cancel'),
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                foregroundColor:
+                                                                    Colors.red,
+                                                                side: const BorderSide(
+                                                                    width: 1,
+                                                                    color: Colors
+                                                                        .red),
+                                                              ),
+                                                            )
+                                                          : ElevatedButton.icon(
+                                                              onPressed:
+                                                                  () async {
+                                                                // List res = await sendEnquiry(
+                                                                //     widget.routeIndex,
+                                                                //     widget.startDate,
+                                                                //     widget.deadline,
+                                                                //     guide["id"],
+                                                                //     guide["money_rate"]);
+                                                                // if (res[0]) {
+                                                                //   showSnackBar(
+                                                                //       true, "Enquiry sent");
+                                                                //   setState(() {
+                                                                //     getGuides();
+                                                                //     isLoading = true;
+                                                                //   });
+                                                                // }
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.add),
+                                                              label: const Text(
+                                                                  'Enquire'),
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                foregroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                side: const BorderSide(
+                                                                    width: 1,
+                                                                    color: Colors
+                                                                        .green),
+                                                              ),
+                                                            ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        return widgets;
+                                      }()),
+                                    ),
+                                  ),
+                                ),
+                          widget.isGuide
+                              ? Center(
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      color: null,
+                                    ),
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      children: (() {
+                                        List<Widget> widgets = [];
+                                        if (hireList.isEmpty) {
+                                          return [
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            const Center(
+                                                child:
+                                                    Text("No Accepted Guides."))
+                                          ];
+                                        } else {
+                                          for (int index = 0;
+                                              index < hireList.length;
+                                              index++) {
+                                            widgets.add(
+                                              const SizedBox(height: 20),
+                                            );
+                                            final guide = hireList[index]
+                                                ["guide"]["user"];
+                                            final enquiry = hireList[index];
+                                            widgets.add(
+                                              GestureDetector(
                                                 onTap: () {
                                                   //TODO: prompt hiring the guide.
                                                 },
@@ -404,11 +599,141 @@ class _NotificationPageState extends State<NotificationPage>
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        return widgets;
+                                      }()),
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      color: null,
+                                    ),
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      children: (() {
+                                        List<Widget> widgets = [];
+                                        if (acceptedGuideList.isEmpty) {
+                                          return [
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            const Center(
+                                                child:
+                                                    Text("No Accepted Guides."))
+                                          ];
+                                        } else {
+                                          for (int index = 0;
+                                              index < acceptedGuideList.length;
+                                              index++) {
+                                            widgets.add(
+                                              const SizedBox(height: 20),
+                                            );
+                                            final guide =
+                                                acceptedGuideList[index]
+                                                    ["guide"]["user"];
+                                            final enquiry =
+                                                acceptedGuideList[index];
+                                            widgets.add(
+                                              GestureDetector(
+                                                onTap: () {
+                                                  //TODO: prompt hiring the guide.
+                                                },
+                                                child: Container(
+                                                  margin: const EdgeInsets
+                                                      .symmetric(vertical: 4.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black
+                                                        .withOpacity(0.4),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  child: SizedBox(
+                                                    height: 115,
+                                                    child: ListTile(
+                                                      contentPadding:
+                                                          const EdgeInsets.only(
+                                                              top: 8.0,
+                                                              left: 5,
+                                                              right: 5),
+                                                      leading:
+                                                          const CircleAvatar(
+                                                        backgroundImage:
+                                                            AssetImage(
+                                                                'img/hire.png'),
+                                                      ),
+                                                      title: Text(
+                                                          '${guide["first_name"]} ${guide["last_name"]}'),
+                                                      subtitle: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const SizedBox(
+                                                              height: 5),
+                                                          Text(
+                                                              '${enquiry["trail"]["name"]}'),
+                                                          Text(
+                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
+                                                          Text(
+                                                            'Rate: Rs ${enquiry["money_rate"]}/day',
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      trailing:
+                                                          ElevatedButton.icon(
+                                                        onPressed: () async {
+                                                          // List res = await sendEnquiry(
+                                                          //     widget.routeIndex,
+                                                          //     widget.startDate,
+                                                          //     widget.deadline,
+                                                          //     guide["id"],
+                                                          //     guide["money_rate"]);
+                                                          // if (res[0]) {
+                                                          //   showSnackBar(
+                                                          //       true, "Enquiry sent");
+                                                          //   setState(() {
+                                                          //     getGuides();
+                                                          //     isLoading = true;
+                                                          //   });
+                                                          // }
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.add),
+                                                        label:
+                                                            const Text('Hire'),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          foregroundColor:
+                                                              Colors.green,
+                                                          side:
+                                                              const BorderSide(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .green),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        return widgets;
+                                      }()),
                                     ),
                                   ),
                                 ),

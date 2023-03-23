@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/trail_detail_screen.dart';
 import 'package:frontend/widgets/search_bar.dart';
 import 'mother_screen.dart';
 
@@ -20,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool isGuide = true;
   var images = {
     "to-do-list.png": "Todo List",
     "hire.png": "Hire Guide",
@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isGuide = widget.userProfile["userType"] == "TR" ? false : true;
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -121,8 +122,14 @@ class _HomeScreenState extends State<HomeScreen>
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          // BlocProvider.of<AppCubits>(context)
-                          //     .detailPage(info[index]);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                routeId: widget.allTrailList[index]["id"],
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           margin: const EdgeInsets.only(
@@ -324,140 +331,65 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   padding: const EdgeInsetsDirectional.symmetric(
                       horizontal: 30, vertical: 25),
-                  child: (widget.userProfile['userType'] == 'TR')
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: const [
-                                CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundImage:
-                                      AssetImage('assets/guide1.jpeg'),
-                                ),
-                                SizedBox(width: 5),
-                                CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundImage:
-                                      AssetImage('assets/guide2.jpeg'),
-                                ),
-                                SizedBox(width: 5),
-                                CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundImage:
-                                      AssetImage('assets/guide3.jpeg'),
-                                ),
-                              ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: const [
+                          CircleAvatar(
+                            radius: 25.0,
+                            backgroundImage: AssetImage('assets/guide1.jpeg'),
+                          ),
+                          SizedBox(width: 5),
+                          CircleAvatar(
+                            radius: 25.0,
+                            backgroundImage: AssetImage('assets/guide2.jpeg'),
+                          ),
+                          SizedBox(width: 5),
+                          CircleAvatar(
+                            radius: 25.0,
+                            backgroundImage: AssetImage('assets/guide3.jpeg'),
+                          ),
+                        ],
+                      ),
+                      // Icon(
+                      //   Icons.nordic_walking,
+                      //   color: Color.fromARGB(255, 255, 255, 255),
+                      //   size: 50.0,
+                      // ),
+                      // Expanded(child: Container()),
+                      SizedBox(
+                        height: 45,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (isGuide) {
+                              // do something
+                              widget.leaderboard();
+                            } else {
+                              widget.hiringPage();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black.withOpacity(0.4),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            // Icon(
-                            //   Icons.nordic_walking,
-                            //   color: Color.fromARGB(255, 255, 255, 255),
-                            //   size: 50.0,
-                            // ),
-                            // Expanded(child: Container()),
-                            SizedBox(
-                              height: 45,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (isGuide) {
-                                    // do something
-                                    widget.leaderboard();
-                                  } else {
-                                    widget.hiringPage();
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.black.withOpacity(0.4),
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                child: Text(
-                                  isGuide ? "Leader Board" : "Hire Guides",
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    color: Color.fromARGB(255, 234, 234, 234),
-                                  ),
-                                ),
-                              ),
+                          ),
+                          child: Text(
+                            isGuide ? "Leader Board" : "Hire Guides",
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              color: Color.fromARGB(255, 234, 234, 234),
                             ),
-                          ],
-                        )
-                      : Row(
-                          children: [
-                            const Icon(
-                              Icons.directions_walk_outlined,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              size: 50.0,
-                            ),
-                            Expanded(child: Container()),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black.withOpacity(0.4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              child: const Text(
-                                "Survey Trials",
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Color.fromARGB(255, 234, 234, 234),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
+                      ),
+                    ],
+                  ),
                 ),
-
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 4.0),
-                //   decoration: BoxDecoration(
-                //     color: Colors.white.withOpacity(0.1),
-                //     borderRadius: BorderRadius.circular(15.0),
-                //   ),
-                //   padding: EdgeInsetsDirectional.symmetric(
-                //       horizontal: 45, vertical: 25),
-                //   child: Row(
-                //     children: [
-                //       Icon(
-                //         Icons.warning_amber,
-                //         color: Color.fromARGB(197, 255, 225, 0),
-                //         size: 50.0,
-                //       ),
-                //       Expanded(child: Container()),
-                //       ElevatedButton(
-                //         onPressed: () async {
-                //           const phone = 'tel:911';
-                //           if (await canLaunchUrl(Uri.parse(phone))) {
-                //             await launchUrl(Uri.parse(phone));
-                //           } else {
-                //             throw 'Could not launch $phone';
-                //           }
-                //         },
-                //         child: const Text(
-                //           "Emergency!",
-                //           style: TextStyle(
-                //             fontSize: 18.0,
-                //             color: Color.fromARGB(255, 234, 234, 234),
-                //           ),
-                //         ),
-                //         style: ElevatedButton.styleFrom(
-                //           backgroundColor: Colors.black.withOpacity(0.4),
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(10.0),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
-            // )
           ],
         ),
       ),

@@ -1,96 +1,64 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:frontend/utils/token.dart';
-import 'package:frontend/services/trail_guides.dart';
+import 'package:frontend/utils/http_utils.dart';
 
-Future<Map> getTrailDetails(int routeId) async {
-  Map routeDetails = {};
-  String token = await getToken();
-  // TODO: handle this
-  if (token == 'Expired') {
-    throw "TokenInvalid";
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-    //   (route) => false,
-    // );
-  }
+Future<List> getTrailDetails(int routeId) async {
+  List res = [];
   try {
-    var response = await http.get(
-      Uri.parse('http://74.225.249.44/api/trails/$routeId'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
-    final body = await jsonDecode(response.body);
+    var response =
+        await HttpService.getReq('http://74.225.249.44/api/trails/$routeId');
+    // print(response.body);
+    Map body = await jsonDecode(response.body);
+
     if (body["token_invalid"]) {
-      print("Invalid token");
+      res = [false, "token_expired"];
       // need to implement logout from here
     }
     if (body["success"]) {
       Map data = body["data"];
-      routeDetails["id"] = data["id"];
-      routeDetails["name"] = data["name"];
-      routeDetails["image"] = data["image"];
-      routeDetails["mapImage"] = data["mapImage"];
-      routeDetails["days"] = data["days"];
-      routeDetails["average_rating"] = data["average_rating"];
-      routeDetails["average_difficulty"] = data["average_difficulty"];
-      routeDetails["links"] = data["links"];
-      routeDetails["reviews"] = await getTrailReviews(routeId);
-      // routeDetails["guides"] = await getTrailGuides(routeId);
+      res = [true, data];
     } else {
       if (body["validation_error"]) {
-        print(body["errors"]);
+        // print(body["errors"]);
+        res = [false, body["errors"]];
       } else {
-        print(body["message"]);
+        // print(body["message"]);
+        res = [false, body["message"]];
       }
     }
-    return routeDetails;
+    return res;
   } catch (e) {
-    throw "Error while getting trending list";
+    res = [false, e.toString()];
+    return res;
   }
 }
 
 Future<List> getTrailReviews(int routeId) async {
-  List trailReviews = [];
-  String token = await getToken();
-  // TODO: handle this
-  if (token == 'Expired') {
-    throw "TokenInvalid";
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-    //   (route) => false,
-    // );
-  }
+  List res = [];
   try {
-    var response = await http.get(
-      Uri.parse('http://74.225.249.44/api/trails/$routeId'),
-      headers: {'Authorization': 'Bearer $token'},
-    );
-    final body = await jsonDecode(response.body);
+    var response = await HttpService.getReq(
+        'http://74.225.249.44/api/reviews/trail/$routeId/');
+    // print(response.body);
+    Map body = await jsonDecode(response.body);
+
     if (body["token_invalid"]) {
-      print("Invalid token");
+      res = [false, "token_expired"];
       // need to implement logout from here
     }
     if (body["success"]) {
-      Map data = body["data"];
-      // routeDetails["id"] = data["id"];
-      // routeDetails["name"] = data["name"];
-      // routeDetails["image"] = data["image"];
-      // routeDetails["mapImage"] = data["mapImage"];
-      // routeDetails["days"] = data["days"];
-      // routeDetails["average_rating"] = data["average_rating"];
-      // routeDetails["average_difficulty"] = data["average_difficulty"];
-      // routeDetails["links"] = data["links"];
+      List data = body["data"];
+      res = [true, data];
     } else {
       if (body["validation_error"]) {
-        print(body["errors"]);
+        // print(body["errors"]);
+        res = [false, body["errors"]];
       } else {
-        print(body["message"]);
+        // print(body["message"]);
+        res = [false, body["message"]];
       }
     }
-    return trailReviews;
+    return res;
   } catch (e) {
-    throw "Error while getting trending list";
+    res = [false, e.toString()];
+    return res;
   }
 }
