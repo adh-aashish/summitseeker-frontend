@@ -104,3 +104,34 @@ Future<List> sendResponse(int hireId, String status) async {
     return res;
   }
 }
+
+Future<List> finalHire(int hireId) async {
+  List res = [];
+  // List allGuidesOfRoute = [];
+  try {
+    Map data = {};
+
+    var response =
+        await HttpService.getReq('http://74.225.249.44/api/hire/$hireId/');
+    print(response.body);
+    Map body = await jsonDecode(response.body);
+
+    if (body["token_invalid"]) {
+      res = [false, "token_invalid"];
+      // need to implement logout from here
+    }
+    if (body["success"]) {
+      res = [true, "You can see the guides contact now"];
+    } else {
+      if (body["validation_error"]) {
+        res = [false, body["errors"]];
+      } else {
+        res = [false, body["message"]];
+      }
+    }
+    return res;
+  } catch (e) {
+    res = [false, e.toString()];
+    return res;
+  }
+}

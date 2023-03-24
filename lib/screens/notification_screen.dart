@@ -726,7 +726,8 @@ class _NotificationPageState extends State<NotificationPage>
                                                           Text(
                                                               '${enquiry["trail"]["name"]}'),
                                                           Text(
-                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
+                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : enquiry["status"] == "AC" ? "Accepted" : "Hired"}'
+                                                              ''),
                                                           Text(
                                                             'Rate: Rs ${enquiry["money_rate"]}/day',
                                                             style: const TextStyle(
@@ -734,25 +735,33 @@ class _NotificationPageState extends State<NotificationPage>
                                                                     FontWeight
                                                                         .bold),
                                                           ),
+                                                          Text(enquiry[
+                                                                      "email"] !=
+                                                                  null
+                                                              ? 'Email:${enquiry["email"]} '
+                                                              : ""),
+                                                          Text(enquiry[
+                                                                      "contactNum"] !=
+                                                                  null
+                                                              ? 'Contact No. :${enquiry["contactNum"]} '
+                                                              : "")
                                                         ],
                                                       ),
                                                       trailing:
                                                           ElevatedButton.icon(
                                                         onPressed: () async {
-                                                          // List res = await sendEnquiry(
-                                                          //     widget.routeIndex,
-                                                          //     widget.startDate,
-                                                          //     widget.deadline,
-                                                          //     guide["id"],
-                                                          //     guide["money_rate"]);
-                                                          // if (res[0]) {
-                                                          //   showSnackBar(
-                                                          //       true, "Enquiry sent");
-                                                          //   setState(() {
-                                                          //     getGuides();
-                                                          //     isLoading = true;
-                                                          //   });
-                                                          // }
+                                                          List res =
+                                                              await finalHire(
+                                                                  enquiry[
+                                                                      "id"]);
+                                                          if (res[0]) {
+                                                            showSnackBar(true,
+                                                                "Enquiry sent");
+                                                            setState(() {
+                                                              getEnquiredAndAcceptedGuidesList();
+                                                              isLoading = true;
+                                                            });
+                                                          }
                                                         },
                                                         icon: const Icon(
                                                             Icons.add),
