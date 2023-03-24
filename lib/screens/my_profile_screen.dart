@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/services/user_profile.dart';
+import 'package:frontend/services/my_profile.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
         } else {
           showSnackBar(false, response[1]);
         }
-        reviewList = [
+        List hardreviewList = [
           {
             "first_name": "Aashish",
             "last_name": "Adhikari",
@@ -98,6 +98,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 "https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png",
           }
         ];
+        for (int i = 0; i < hardreviewList.length; i++) {
+          reviewList.add(hardreviewList[i]);
+        }
       });
     } catch (e) {
       showSnackBar(false, e.toString());

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/services/logout.dart';
 
 import '../screens/edit_profile.dart';
-import '../screens/profile_info.dart';
+import '../screens/my_profile_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   final Map userProfile;

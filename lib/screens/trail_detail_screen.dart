@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/services/trail_details.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:frontend/services/user_profile.dart';
+import 'package:frontend/services/my_profile.dart';
 
 class DetailPage extends StatefulWidget {
   final int routeId;
@@ -59,6 +59,7 @@ class DetailPageState extends State<DetailPage> {
       setState(() {
         if (response[0]) {
           reviewList = response[1];
+          print(reviewList);
         } else if (response[1] == 'token_expired') {
           Navigator.pushAndRemoveUntil(
             context,
@@ -68,7 +69,7 @@ class DetailPageState extends State<DetailPage> {
         } else {
           showSnackBar(false, response[1]);
         }
-        reviewList = [
+        List hardreviewList = [
           {
             "first_name": "Aashish",
             "last_name": "Adhikari",
@@ -88,6 +89,9 @@ class DetailPageState extends State<DetailPage> {
                 "https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png",
           }
         ];
+        for (int i = 0; i < hardreviewList.length; i++) {
+          reviewList.add(hardreviewList[i]);
+        }
         isLoading = false;
       });
     } catch (e) {
@@ -277,17 +281,15 @@ class DetailPageState extends State<DetailPage> {
                                               children: <Widget>[
                                                 Row(
                                                   children: <Widget>[
-                                                    CircleAvatar(
-                                                      backgroundImage:
-                                                          NetworkImage(
-                                                              reviewList[index]
-                                                                  ["photo"]),
-                                                    ),
+                                                    const CircleAvatar(
+                                                        backgroundImage:
+                                                            AssetImage(
+                                                                "img/hire.png")),
                                                     const SizedBox(width: 10),
                                                     Column(
                                                       children: [
-                                                        Text(
-                                                            '${reviewList[index]["first_name"]} ${reviewList[index]["last_name"]} '),
+                                                        // Text(
+                                                        //     '${reviewList[index]["first_name"]} ${reviewList[index]["last_name"]} '),
                                                         const SizedBox(
                                                             height: 2),
                                                         RatingBarIndicator(

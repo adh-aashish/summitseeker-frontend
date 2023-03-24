@@ -42,6 +42,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           newMap["id"] = trail["id"];
           newMap["name"] = trail["name"];
           newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
+          // newMap["average_rating"] = trail["average_rating"];
           allTrailList.add(newMap);
         }
       } else {

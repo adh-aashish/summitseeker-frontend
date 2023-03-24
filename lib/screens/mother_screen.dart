@@ -4,6 +4,7 @@ import 'package:frontend/screens/notification_screen.dart';
 import 'package:frontend/widgets/drawer.dart';
 import 'hire_screen.dart';
 import 'home_screen.dart';
+import 'bookings_screen.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -82,7 +83,6 @@ class _MotherScreenState extends State<MotherScreen> {
         : ((data['userProfile'] ?? {}) as Map);
 
     isGuide = userProfile["userType"] == "TR" ? false : true;
-    print(isGuide);
     //print(userProfile['userType'].toString());
     late final List<Widget> _pages = <Widget>[
       HomeScreen(
@@ -91,7 +91,7 @@ class _MotherScreenState extends State<MotherScreen> {
           hiringPage: moveToHiringPage,
           leaderboard: moveToLeaderBoard),
       isGuide
-          ? Container()
+          ? BookingPage()
           : TrekkingRoutesPage(
               allTrailList: allTrailList,
               notificationPage: moveToNotificationPage,
@@ -162,7 +162,7 @@ class _MotherScreenState extends State<MotherScreen> {
                     label: "Home", icon: Icon(Icons.apps)),
                 isGuide
                     ? const BottomNavigationBarItem(
-                        label: "LeaderBoard", icon: Icon(Icons.leaderboard))
+                        label: "LeaderBoard", icon: Icon(Icons.event_available))
                     : const BottomNavigationBarItem(
                         label: "Hire", icon: Icon(Icons.hiking)),
                 const BottomNavigationBarItem(

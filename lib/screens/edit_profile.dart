@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/profile_info.dart';
+import 'package:frontend/screens/my_profile_screen.dart';
 
 class ProfileEditingPage extends StatefulWidget {
   final UserInfo userInfo;

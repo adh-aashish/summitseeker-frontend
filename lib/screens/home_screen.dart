@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frontend/screens/trail_detail_screen.dart';
 import 'package:frontend/widgets/search_bar.dart';
 import 'mother_screen.dart';
@@ -153,6 +154,20 @@ class _HomeScreenState extends State<HomeScreen>
                                     widget.allTrailList[index]['image-url']),
                                 fit: BoxFit.cover),
                           ),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              color: Colors.black.withOpacity(0.5),
+                              child: Text(
+                                widget.allTrailList[index]["name"],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -305,12 +320,12 @@ class _HomeScreenState extends State<HomeScreen>
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.only(start: 20),
+                  padding: const EdgeInsetsDirectional.only(start: 20),
                   child: Text(
-                    "Guides",
-                    style: TextStyle(
+                    isGuide ? "Trekkers" : "Guides",
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 174, 171, 171),
                       fontSize: 25.0,
                       fontWeight: FontWeight.bold,
@@ -377,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                           child: Text(
-                            isGuide ? "Leader Board" : "Hire Guides",
+                            isGuide ? "Bookings" : "Hire Guides",
                             style: const TextStyle(
                               fontSize: 18.0,
                               color: Color.fromARGB(255, 234, 234, 234),

@@ -70,3 +70,37 @@ Future<List> cancelEnquiry(int hireId) async {
     return res;
   }
 }
+
+Future<List> sendResponse(int hireId, String status) async {
+  List res = [];
+  // List allGuidesOfRoute = [];
+  try {
+    Map data = {};
+    data["status"] = status;
+    // data["deadline"] = deadline;
+
+    var response = await HttpService.postReq(
+        'http://74.225.249.44/api/response/$hireId/', data);
+    // print(jsonEncode(data));
+    print(response.body);
+    Map body = await jsonDecode(response.body);
+
+    if (body["token_invalid"]) {
+      res = [false, "token_invalid"];
+      // need to implement logout from here
+    }
+    if (body["success"]) {
+      res = [true, "Response Sent"];
+    } else {
+      if (body["validation_error"]) {
+        res = [false, body["errors"]];
+      } else {
+        res = [false, body["message"]];
+      }
+    }
+    return res;
+  } catch (e) {
+    res = [false, e.toString()];
+    return res;
+  }
+}
