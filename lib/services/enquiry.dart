@@ -110,9 +110,10 @@ Future<List> finalHire(int hireId) async {
   // List allGuidesOfRoute = [];
   try {
     Map data = {};
+    data["hire_id"] = hireId;
 
     var response =
-        await HttpService.getReq('http://74.225.249.44/api/hire/$hireId/');
+        await HttpService.postReq('http://74.225.249.44/api/hire/', data);
     print(response.body);
     Map body = await jsonDecode(response.body);
 

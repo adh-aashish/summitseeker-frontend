@@ -4,6 +4,7 @@ import 'package:frontend/services/notification.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/services/enquiry.dart';
 import 'package:frontend/widgets/rating_dialog.dart';
+import 'package:frontend/screens/user_profile_screen.dart';
 
 // import 'available_guides.dart';
 
@@ -158,6 +159,7 @@ class _NotificationPageState extends State<NotificationPage>
                         children: [
                           widget.isGuide
                               ? Center(
+                                  // Enquiries
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: null,
@@ -322,6 +324,7 @@ class _NotificationPageState extends State<NotificationPage>
                                   ),
                                 )
                               : Center(
+                                  // Enquired
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: null,
@@ -492,6 +495,7 @@ class _NotificationPageState extends State<NotificationPage>
                                 ),
                           widget.isGuide
                               ? Center(
+                                  // Response
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: null,
@@ -656,6 +660,7 @@ class _NotificationPageState extends State<NotificationPage>
                                   ),
                                 )
                               : Center(
+                                  // Accepted
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: null,
@@ -688,7 +693,16 @@ class _NotificationPageState extends State<NotificationPage>
                                             widgets.add(
                                               GestureDetector(
                                                 onTap: () {
-                                                  //TODO: prompt hiring the guide.
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UserProfilePage(
+                                                        guide["id"],
+                                                        userId: guide["id"],
+                                                      ),
+                                                    ),
+                                                  ); //TODO: prompt hiring the guide.
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets
@@ -794,6 +808,7 @@ class _NotificationPageState extends State<NotificationPage>
                                   ),
                                 ),
                           Center(
+                            // Reviews
                             child: Container(
                               decoration: const BoxDecoration(
                                 color: null,
