@@ -127,7 +127,7 @@ class _BookingPageState extends State<BookingPage> {
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: SizedBox(
-                                      height: 115,
+                                      height: 150,
                                       child: InkWell(
                                         onTap: () {
                                           // Handle tap on the row

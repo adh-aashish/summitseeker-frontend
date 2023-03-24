@@ -18,6 +18,7 @@ class MotherScreen extends StatefulWidget {
 class _MotherScreenState extends State<MotherScreen> {
   int _selectedIndex = 0;
   List allTrailList = [];
+  List trendingList = [];
   Map userProfile = {};
   Map data = {};
   late bool isGuide;
@@ -78,6 +79,9 @@ class _MotherScreenState extends State<MotherScreen> {
     allTrailList = allTrailList.isNotEmpty
         ? allTrailList
         : ((data['allTrailList'] ?? []) as List);
+    trendingList = trendingList.isNotEmpty
+        ? trendingList
+        : ((data['trendingList'] ?? []) as List);
     userProfile = userProfile.isNotEmpty
         ? userProfile
         : ((data['userProfile'] ?? {}) as Map);
@@ -87,6 +91,7 @@ class _MotherScreenState extends State<MotherScreen> {
     late final List<Widget> _pages = <Widget>[
       HomeScreen(
           allTrailList: allTrailList,
+          trendingList: trendingList,
           userProfile: userProfile,
           hiringPage: moveToHiringPage,
           leaderboard: moveToLeaderBoard),

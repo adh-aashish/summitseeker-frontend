@@ -6,11 +6,13 @@ import 'mother_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final List allTrailList;
+  final List trendingList;
   final Map userProfile;
   final Function hiringPage;
   final Function leaderboard;
   const HomeScreen(
       {required this.allTrailList,
+      required this.trendingList,
       required this.userProfile,
       required this.hiringPage,
       required this.leaderboard,
@@ -103,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen>
                   //indicator:
                   // CircleTabIndicator(color: AppColors.mainColor, radius: 4),
                   tabs: const [
+                    Tab(text: "All Trails"),
                     Tab(text: "Trending"),
-                    Tab(text: "Recommended"),
                     Tab(text: "New"),
                   ],
                 ),
@@ -173,35 +175,55 @@ class _HomeScreenState extends State<HomeScreen>
                     },
                   ),
                   ListView.builder(
-                    itemCount: 4,
+                    itemCount: widget.trendingList.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          // BlocProvider.of<AppCubits>(context)
-                          //     .detailPage(info[index]);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                routeId: widget.trendingList[index]["id"],
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(right: 15, top: 10),
+                          margin: const EdgeInsets.only(
+                              right: 15, top: 15, bottom: 15),
                           width: 200,
                           height: 300,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset: const Offset(
-                                    2, 2), // changes position of shadow
+                                offset:
+                                    Offset(2, 2), // changes position of shadow
                               ),
                             ],
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                  "img/mountain.jpeg",
-                                ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white.withOpacity(0),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    widget.trendingList[index]['image-url']),
                                 fit: BoxFit.cover),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              color: Colors.black.withOpacity(0.5),
+                              child: Text(
+                                widget.trendingList[index]["name"],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       );

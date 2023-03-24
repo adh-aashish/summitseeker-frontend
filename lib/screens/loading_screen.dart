@@ -14,6 +14,7 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   void setupAllImages() async {
     List allTrailList = [];
+    List trendingList = [];
     Map userProfile = {};
     String token = await getToken();
     if (token == 'Expired' && mounted) {
@@ -36,7 +37,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         // need to implement logout from here
       }
       if (body["success"]) {
-        List data = body["data"];
+        List data = body["data"]["All_Trails"];
         for (Map<String, dynamic> trail in data) {
           Map newMap = {};
           newMap["id"] = trail["id"];
@@ -44,6 +45,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
           newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
           // newMap["average_rating"] = trail["average_rating"];
           allTrailList.add(newMap);
+        }
+        List data2 = body["data"]["Trending_Trails"];
+        for (Map<String, dynamic> trail in data) {
+          Map newMap = {};
+          newMap["id"] = trail["id"];
+          newMap["name"] = trail["name"];
+          newMap["image-url"] = "http://74.225.249.44${trail["image"]}";
+          // newMap["average_rating"] = trail["average_rating"];
+          trendingList.add(newMap);
         }
       } else {
         if (body["validation_error"]) {
@@ -87,6 +97,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       // print("Here");
       Navigator.pushReplacementNamed(context, '/', arguments: {
         'allTrailList': allTrailList,
+        'trendingList': trendingList,
         'userProfile': userProfile,
       });
     }
