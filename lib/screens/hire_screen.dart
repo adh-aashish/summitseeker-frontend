@@ -246,7 +246,7 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                     ),
                     onPressed: () {
                       String startDate = '';
-                      String deadline = '';
+                      int deadline = 3;
                       String month = '';
                       String day = '';
                       if (selectedStartDate.month < 10) {
@@ -272,7 +272,7 @@ class _TrekkingRoutesPageState extends State<TrekkingRoutesPage> {
                         day = '${selectedDeadlineDate.day}';
                       }
 
-                      deadline = '${selectedDeadlineDate.year}-$month-$day';
+                      deadline = 3;
                       // print(startDate);
                       Navigator.push(
                         context,

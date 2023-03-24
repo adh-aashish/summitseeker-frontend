@@ -225,31 +225,47 @@ class DetailPageState extends State<DetailPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(height: 30),
                               Container(
-                                height: 200,
+                                // height: 200,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     const SizedBox(
-                                      height: 60,
+                                      height: 30,
                                     ),
-                                    Text(
-                                      "No. of days: ${trailInfo["days"]}",
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Difficulty: ${trailInfo["average_difficulty"]}",
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
+                                    // Text(
+                                    //   "No. of days: ${trailInfo["days"]}",
+                                    //   style: const TextStyle(
+                                    //     color: Colors.grey,
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
+                                    // Text(
+                                    //   "Difficulty: ${trailInfo["average_difficulty"]}",
+                                    //   style: const TextStyle(
+                                    //     color: Colors.grey,
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          50,
+                                      child: Text(
+                                        trailInfo["description"],
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 30,
                               ),
                               const Text(
                                 "Reviews",
@@ -288,8 +304,8 @@ class DetailPageState extends State<DetailPage> {
                                                     const SizedBox(width: 10),
                                                     Column(
                                                       children: [
-                                                        // Text(
-                                                        //     '${reviewList[index]["first_name"]} ${reviewList[index]["last_name"]} '),
+                                                        Text(
+                                                            '${reviewList[index]["first_name"] ?? "John"} ${reviewList[index]['last_name'] ?? "Last"}'),
                                                         const SizedBox(
                                                             height: 2),
                                                         RatingBarIndicator(

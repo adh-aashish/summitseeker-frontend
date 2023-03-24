@@ -8,7 +8,7 @@ Future<List> getTrailGuides(int routeIndex, String startDate) async {
     Map data = {};
     data["start_date"] = startDate;
     var response = await HttpService.postReq(
-        'http://74.225.249.44/api/trails/$routeIndex/guides/', data);
+        'http://74.225.249.44/api/trails/1/guides/', data);
     print(response.body);
     Map body = await jsonDecode(response.body);
 
@@ -18,6 +18,7 @@ Future<List> getTrailGuides(int routeIndex, String startDate) async {
     }
     if (body["success"]) {
       List data = body["data"];
+      print(data);
       for (Map<String, dynamic> guide in data) {
         Map newMap = {};
         newMap["id"] = guide["guide"]["id"];

@@ -188,6 +188,15 @@ class _NotificationPageState extends State<NotificationPage>
                                               GestureDetector(
                                                 onTap: () {
                                                   //TODO: prompt hiring the guide.
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UserProfilePage(
+                                                        userId: tourist["id"],
+                                                      ),
+                                                    ),
+                                                  ); //TODO: prompt hiring the guide.
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets
@@ -355,6 +364,15 @@ class _NotificationPageState extends State<NotificationPage>
                                               GestureDetector(
                                                 onTap: () {
                                                   //TODO: prompt hiring the guide.
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UserProfilePage(
+                                                              userId:
+                                                                  guide["id"]),
+                                                    ),
+                                                  );
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets
@@ -392,7 +410,7 @@ class _NotificationPageState extends State<NotificationPage>
                                                           Text(
                                                               '${enquiry["trail"]["name"]}'),
                                                           Text(
-                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : 'Accepted'}'),
+                                                              'Status: ${enquiry["status"] == "RQ" ? 'Pending' : enquiry["status"] == "HR" ? 'Hired' : 'Accepted'}'),
                                                           Text(
                                                             'Rate: Rs ${enquiry["money_rate"]}/day',
                                                             style: const TextStyle(
@@ -444,43 +462,90 @@ class _NotificationPageState extends State<NotificationPage>
                                                                         .red),
                                                               ),
                                                             )
-                                                          : ElevatedButton.icon(
-                                                              onPressed:
-                                                                  () async {
-                                                                // List res = await sendEnquiry(
-                                                                //     widget.routeIndex,
-                                                                //     widget.startDate,
-                                                                //     widget.deadline,
-                                                                //     guide["id"],
-                                                                //     guide["money_rate"]);
-                                                                // if (res[0]) {
-                                                                //   showSnackBar(
-                                                                //       true, "Enquiry sent");
-                                                                //   setState(() {
-                                                                //     getGuides();
-                                                                //     isLoading = true;
-                                                                //   });
-                                                                // }
-                                                              },
-                                                              icon: const Icon(
-                                                                  Icons.add),
-                                                              label: const Text(
-                                                                  'Enquire'),
-                                                              style:
-                                                                  ElevatedButton
+                                                          : enquiry["status"] ==
+                                                                  'HR'
+                                                              ? ElevatedButton
+                                                                  .icon(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    // List res = await sendEnquiry(
+                                                                    //     widget.routeIndex,
+                                                                    //     widget.startDate,
+                                                                    //     widget.deadline,
+                                                                    //     guide["id"],
+                                                                    //     guide["money_rate"]);
+                                                                    // if (res[0]) {
+                                                                    //   showSnackBar(
+                                                                    //       true, "Enquiry sent");
+                                                                    //   setState(() {
+                                                                    //     getGuides();
+                                                                    //     isLoading = true;
+                                                                    //   });
+                                                                    // }
+                                                                  },
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .check),
+                                                                  label: const Text(
+                                                                      'Hired'),
+                                                                  style: ElevatedButton
                                                                       .styleFrom(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                foregroundColor:
-                                                                    Colors
-                                                                        .green,
-                                                                side: const BorderSide(
-                                                                    width: 1,
-                                                                    color: Colors
-                                                                        .green),
-                                                              ),
-                                                            ),
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    foregroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    side: const BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .green),
+                                                                  ),
+                                                                )
+                                                              : ElevatedButton
+                                                                  .icon(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    print(enquiry[
+                                                                            "guide"]
+                                                                        ["id"]);
+                                                                    List res = await cancelEnquiry(
+                                                                        enquiry[
+                                                                            "id"]);
+                                                                    if (res[
+                                                                        0]) {
+                                                                      showSnackBar(
+                                                                          true,
+                                                                          "Enquiry Deleted");
+                                                                      setState(
+                                                                          () {
+                                                                        getEnquiredAndAcceptedGuidesList();
+                                                                        isLoading =
+                                                                            true;
+                                                                      });
+                                                                    }
+                                                                  },
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .check),
+                                                                  label: const Text(
+                                                                      'Accepted'),
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    foregroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    side: const BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .green),
+                                                                  ),
+                                                                ),
                                                     ),
                                                   ),
                                                 ),
@@ -524,6 +589,15 @@ class _NotificationPageState extends State<NotificationPage>
                                               GestureDetector(
                                                 onTap: () {
                                                   //TODO: prompt hiring the guide.
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UserProfilePage(
+                                                              userId: tourist[
+                                                                  "id"]),
+                                                    ),
+                                                  );
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets
@@ -698,7 +772,6 @@ class _NotificationPageState extends State<NotificationPage>
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           UserProfilePage(
-                                                        guide["id"],
                                                         userId: guide["id"],
                                                       ),
                                                     ),
@@ -770,7 +843,7 @@ class _NotificationPageState extends State<NotificationPage>
                                                                       "id"]);
                                                           if (res[0]) {
                                                             showSnackBar(true,
-                                                                "Enquiry sent");
+                                                                "Hired Successfully. Guide will soon contact");
                                                             setState(() {
                                                               getEnquiredAndAcceptedGuidesList();
                                                               isLoading = true;

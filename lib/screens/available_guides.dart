@@ -7,7 +7,7 @@ import 'package:frontend/services/enquiry.dart';
 class TrekGuidesPage extends StatefulWidget {
   final int routeIndex;
   final String startDate;
-  final String deadline;
+  final int deadline;
   final Function notificationPage;
 
   const TrekGuidesPage(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:frontend/utils/http_utils.dart';
 
-Future<List> sendEnquiry(int routeIndex, String startDate, String deadline,
+Future<List> sendEnquiry(int routeIndex, String startDate, int deadline,
     int guideId, double moneyRate) async {
   List res = [];
   // List allGuidesOfRoute = [];

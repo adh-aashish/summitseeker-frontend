@@ -6,7 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class UserProfilePage extends StatefulWidget {
   final int userId;
-  const UserProfilePage(guide, {required this.userId, super.key});
+  const UserProfilePage({required this.userId, super.key});
 
   @override
   State<UserProfilePage> createState() => _UserProfilePageState();
@@ -92,6 +92,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize the user info data here
+    getUserInfo();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData.dark(),
@@ -167,7 +174,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               ),
                               Text(
                                 // userProfile["contactNum"].toString(),
-                                userProfile["contactNum"] ?? "",
+                                userProfile["contactNum"].toString() ?? "",
                                 style: TextStyle(
                                   color: Colors.grey[400],
                                 ),

@@ -230,35 +230,55 @@ class _HomeScreenState extends State<HomeScreen>
                     },
                   ),
                   ListView.builder(
-                    itemCount: 4,
+                    itemCount: widget.allTrailList.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          // BlocProvider.of<AppCubits>(context)
-                          //     .detailPage(info[index]);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                routeId: widget.allTrailList[index]["id"],
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
-                          margin: const EdgeInsets.only(right: 15, top: 10),
+                          margin: const EdgeInsets.only(
+                              right: 15, top: 15, bottom: 15),
                           width: 200,
                           height: 300,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset: const Offset(
-                                    2, 2), // changes position of shadow
+                                offset:
+                                    Offset(2, 2), // changes position of shadow
                               ),
                             ],
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                  "img/mountain.jpeg",
-                                ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white.withOpacity(0),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    widget.allTrailList[index]['image-url']),
                                 fit: BoxFit.cover),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              color: Colors.black.withOpacity(0.5),
+                              child: Text(
+                                widget.allTrailList[index]["name"],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       );
